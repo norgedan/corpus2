@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Războiul Invizibil — Minți, Rețele și Puterea Siliciului</title>
+<style>
+  :root {
+    --bg:        #0f1117;
+    --surface:   #181c27;
+    --border:    #2a2f42;
+    --rose:      #b85c5c;
+    --rose-dim:  #7a3a3a;
+    --teal:      #4a9e9e;
+    --gold:      #c9a84c;
+    --gold-dim:  #8a6e30;
+    --violet:    #7c6fb0;
+    --text:      #dde1ec;
+    --muted:     #7a8199;
+    --chapter-w: 740px;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--text); font-family: 'Georgia','Times New Roman',serif; font-size: 1.05rem; line-height: 1.85; }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; padding: 5rem 2rem;
+    background: radial-gradient(ellipse at 50% 35%, #1c1118 0%, #0f1117 68%);
+    border-bottom: 1px solid var(--border);
+  }
+  .hero-series { font-size: .75rem; letter-spacing: .2em; color: var(--rose-dim); text-transform: uppercase; margin-bottom: 2rem; }
+  .hero h1 { font-size: clamp(2rem, 5vw, 3.8rem); font-weight: 700; color: #fff; line-height: 1.15; margin-bottom: 1rem; max-width: 820px; }
+  .hero h1 span { color: var(--rose); }
+  .hero-sub { font-size: 1.05rem; color: var(--muted); max-width: 600px; margin: 0 auto 2.4rem; font-style: italic; }
+  .hero-verse { border-left: 3px solid var(--rose); padding: .9rem 1.5rem; font-style: italic; color: #e8dfc8; max-width: 580px; margin: 0 auto 2.6rem; text-align: left; line-height: 1.75; }
+  .hero-verse cite { display: block; font-style: normal; font-size: .8rem; color: var(--rose-dim); margin-top: .5rem; }
+  .toc-hint { font-size: .82rem; color: var(--muted); }
+
+  /* ── NAV ── */
+  nav.doc-nav { position: sticky; top: 0; z-index: 100; background: rgba(15,17,23,.96); backdrop-filter: blur(8px); border-bottom: 1px solid var(--border); padding: .55rem 0; }
+  .nav-inner { max-width: var(--chapter-w); margin: 0 auto; padding: 0 1.5rem; display: flex; align-items: center; gap: .4rem; flex-wrap: wrap; }
+  .nav-inner span { font-size: .7rem; color: var(--muted); margin-right: .3rem; }
+  nav.doc-nav a { font-size: .72rem; color: var(--muted); text-decoration: none; padding: .22rem .5rem; border-radius: 4px; transition: color .2s, background .2s; }
+  nav.doc-nav a:hover { color: var(--rose); background: rgba(184,92,92,.08); }
+
+  /* ── CHAPTER ── */
+  .chapter { max-width: var(--chapter-w); margin: 0 auto; padding: 5rem 1.5rem 3rem; }
+  .chapter + .chapter { padding-top: 3.5rem; }
+  .ch-header { margin-bottom: 2.4rem; padding-bottom: 1.2rem; border-bottom: 1px solid var(--border); }
+  .ch-num { font-size: .7rem; letter-spacing: .16em; color: var(--rose-dim); text-transform: uppercase; margin-bottom: .6rem; }
+  .ch-title { font-size: clamp(1.4rem, 3.5vw, 2rem); font-weight: 700; color: #fff; line-height: 1.22; }
+  .ch-title em { color: var(--rose); font-style: normal; }
+  .chapter p { margin-bottom: 1.3rem; }
+  .chapter h3 { font-size: 1.18rem; color: var(--rose); margin: 2.2rem 0 .9rem; font-weight: 600; }
+  .chapter h4 { font-size: 1rem; color: var(--teal); margin: 1.8rem 0 .7rem; font-weight: 600; }
+
+  /* ── BLOCKS ── */
+  .verse { border-left: 3px solid var(--rose); background: rgba(184,92,92,.05); padding: 1rem 1.5rem; margin: 1.8rem 0; border-radius: 0 6px 6px 0; font-style: italic; color: #e8dfc8; line-height: 1.78; }
+  .verse cite { display: block; font-style: normal; font-size: .8rem; color: var(--rose-dim); margin-top: .6rem; }
+  .data-box { background: rgba(74,158,158,.07); border: 1px solid rgba(74,158,158,.22); border-radius: 8px; padding: 1.3rem 1.5rem; margin: 1.8rem 0; }
+  .data-box .label { font-size: .7rem; letter-spacing: .14em; color: var(--teal); text-transform: uppercase; margin-bottom: .6rem; }
+  .warning-box { background: rgba(184,92,92,.07); border: 1px solid rgba(184,92,92,.22); border-radius: 8px; padding: 1.2rem 1.5rem; margin: 1.8rem 0; }
+  .warning-box .label { font-size: .7rem; letter-spacing: .12em; color: var(--rose); text-transform: uppercase; margin-bottom: .5rem; }
+  .case-box { background: rgba(124,111,176,.07); border: 1px solid rgba(124,111,176,.22); border-radius: 8px; padding: 1.2rem 1.5rem; margin: 1.8rem 0; }
+  .case-box .label { font-size: .7rem; letter-spacing: .12em; color: var(--violet); text-transform: uppercase; margin-bottom: .5rem; }
+  .red-thread { border-left: 4px solid var(--rose); background: rgba(184,92,92,.07); padding: 1rem 1.5rem; margin: 2rem 0; border-radius: 0 8px 8px 0; font-style: italic; color: #e8dfc8; }
+  .red-thread strong { color: var(--rose); font-style: normal; }
+  .hidden-link { background: rgba(201,168,76,.05); border: 1px dashed var(--gold-dim); border-radius: 8px; padding: 1rem 1.4rem; margin: 2rem 0; font-size: .93rem; }
+  .hidden-link .label { font-size: .7rem; letter-spacing: .13em; color: var(--gold-dim); text-transform: uppercase; margin-bottom: .4rem; }
+  .actor-box { background: rgba(15,17,23,.8); border: 1px solid var(--border); border-radius: 8px; padding: 1.2rem 1.5rem; margin: 1.4rem 0; }
+  .actor-box .actor-name { font-size: .85rem; font-weight: 700; color: var(--rose); margin-bottom: .4rem; letter-spacing: .05em; }
+  .lie-box { background: rgba(184,92,92,.06); border-left: 4px solid var(--rose-dim); padding: 1rem 1.4rem; margin: 1.4rem 0; border-radius: 0 6px 6px 0; }
+  .lie-box .lie-title { font-size: .85rem; font-weight: 700; color: var(--rose); margin-bottom: .5rem; }
+  .lie-box .vaccine { font-size: .88rem; color: var(--teal); margin-top: .6rem; padding-top: .5rem; border-top: 1px solid rgba(74,158,158,.2); }
+  .divider { text-align: center; color: var(--rose-dim); font-size: 1rem; letter-spacing: .4em; margin: 3rem 0; opacity: .5; }
+  footer { border-top: 1px solid var(--border); padding: 2.5rem 1.5rem; text-align: center; color: var(--muted); font-size: .8rem; max-width: var(--chapter-w); margin: 4rem auto 0; }
+  @media (max-width: 600px) { .hero h1 { font-size: 1.9rem; } .chapter { padding: 3rem 1rem 2rem; } }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════ HERO ═══════════════ -->
+<header class="hero">
+  <p class="hero-series">Corpusul II · Documentul C</p>
+  <h1>Războiul <span>Invizibil</span></h1>
+  <p class="hero-sub">Minți, rețele și puterea siliciului — un război care nu apare pe nicio hartă, dar care se desfășoară în fiecare zi, pe ecranul tău</p>
+  <blockquote class="hero-verse">
+    „Nu există nimic ascuns care să nu iasă la lumină, și nimic tainic care să nu devină cunoscut."
+    <cite>Luca 8:17</cite>
+  </blockquote>
+  <p class="toc-hint">↓ Derulați pentru a citi</p>
+</header>
+
+<!-- ═══════════════ NAV ═══════════════ -->
+<nav class="doc-nav">
+  <div class="nav-inner">
+    <span>Capitole:</span>
+    <a href="#economia">Economia atenției</a>
+    <a href="#actori">Actorii online</a>
+    <a href="#minciuni">Cele 6 minciuni mari</a>
+    <a href="#romania-vulnerabila">România vulnerabilă</a>
+    <a href="#galati">Galați 29 mai 2026</a>
+    <a href="#algoritm">Algoritmul</a>
+    <a href="#radicalizat">Omul radicalizat</a>
+    <a href="#silicon">Siliciul ca putere</a>
+    <a href="#razboi-cibernetic">Războiul cibernetic</a>
+    <a href="#glasswing">Project Glasswing</a>
+    <a href="#ce-faci">Ce poți face</a>
+  </div>
+</nav>
+
+<!-- ═══════════════ INTRODUCERE ═══════════════ -->
+<section class="chapter" id="intro">
+  <div class="ch-header">
+    <p class="ch-num">Introducere</p>
+    <h2 class="ch-title">Oglinda <em>care nu minte</em></h2>
+  </div>
+
+  <p>Există un război care nu apare pe nicio hartă. Nu are front vizibil, nu produce imagini spectaculoase de știri și nu se încheie cu tratate de pace. Se desfășoară în interiorul dispozitivelor pe care le atingem în fiecare zi — telefoane, routere, sisteme informatice de spital, rețele electrice. Se desfășoară în timp real, pe toate continentele simultan, și a început cu mult înainte ca majoritatea oamenilor să fi auzit termenul de „război cibernetic".</p>
+
+  <p>Dar există un al doilea front, mai vechi și mai subtil: războiul pentru mintea ta. Nu cu tancuri. Cu întrebări care redefinesc realitatea. Cu știri care îți activează frica înainte să apuce să îți activeze gândirea. Cu algoritmi care nu știu ce este adevărul, dar știu perfect ce te ține pe ecran mai mult.</p>
+
+  <p>Aceste două fronturi — dezinformarea și atacul cibernetic — nu sunt separate. Sunt fețele aceleiași medalii. Atunci când o dronă rusă a lovit un bloc din Galați pe 29 mai 2026, atacul kinetic și cel informațional au sosit simultan. Drona a lovit etajul zece. Narativele false au lovit rețelele sociale în același minut.</p>
+
+  <p>Documentul de față nu este un raport academic. Este o hartă — construită pentru oricine vrea să înțeleagă ce i se întâmplă când deschide telefonul. Fiecare afirmație din aceste pagini poate fi verificată. Sursele sunt publice. Datele sunt reale. Vulnerabilitățile sunt reale. Și speranța — că înțelegerea este primul pas spre reziliență — este reală și ea.</p>
+
+  <div class="hidden-link">
+    <p class="label">Legătură ascunsă — Prima manipulare</p>
+    <p>Prima armă a adversarului, din Geneza 3, nu a fost violența, ci cuvântul distorsionat — o întrebare care redefinea realitatea: „Oare a zis Dumnezeu cu adevărat?" Același tipar funcționează în propaganda modernă: nu inventează minciuni totale, ci amestecă adevăruri parțiale cu distorsiuni. Omite ce contează. Adaugă un element care deschide o fisură în certitudine. Tiparele nu s-au schimbat. Doar tehnologia a accelerat.</p>
+  </div>
+</section>
+
+<!-- ═══════════════ CAP. I — ECONOMIA ATENȚIEI ═══════════════ -->
+<section class="chapter" id="economia">
+  <div class="ch-header">
+    <p class="ch-num">Capitolul I</p>
+    <h2 class="ch-title">Economia atenției — <em>Tu ești produsul</em></h2>
+  </div>
+
+  <p>Înainte să vorbim despre minciuni, trebuie să înțelegem mașinăria care le poartă. Rețelele sociale nu au fost construite pentru a ne informa. Au fost construite pentru a ne ține cât mai mult timp cu ochii pe ecran. Fiecare minut petrecut pe Facebook, TikTok sau YouTube înseamnă bani pentru companiile care vând publicitate. Iar companiile au descoperit, de mult timp, că emoțiile negative — furia, frica, indignarea — țin omul lipit de ecran mai bine decât orice altceva.</p>
+
+  <p>Aceasta este ceea ce experții numesc <strong>economia atenției</strong>. Atenția ta este produsul. Tu ești cel cumpărat și vândut. Algoritmul nu știe și nu îl interesează dacă o postare este adevărată sau falsă. Îl interesează un singur lucru: dacă stârnește o reacție. O minciună bine construită, care te înfurie sau te sperie, va fi distribuită de zece ori mai repede decât o informație corectă, dar plictisitoare. Acesta nu este un accident. Este designul sistemului.</p>
+
+  <div class="data-box">
+    <p class="label">Date verificate — costul dezinformării</p>
+    <p>Un studiu european recent a calculat că dezinformarea costă România aproape <strong>un miliard de euro pe an</strong>, prin efectele sale economice — pierderea încrederii, decizii proaste luate pe baza unor informații false, crize artificiale care paralizează instituțiile. La nivel global, costul dezinformării depășește <strong>400 de miliarde de dolari anual</strong> — mai mult decât produsul intern brut al multor țări.</p>
+  </div>
+
+  <p>Dacă un utilizator român deschide astăzi TikTok și derulează primele cincizeci de postări, <strong>nouă dintre ele vor fi conținut manipulator sau dezinformator</strong>. Niciuna nu va proveni dintr-o sursă oficială verificată. O postare de dezinformare emoțional construită primește de zece ori mai multă distribuție decât un comunicat oficial corect, dar neutru. Acesta este câmpul de luptă.</p>
+
+  <p>Înțelegerea acestui mecanism este primul pas. Nu poți rezista unui sistem pe care nu îl cunoști. Algoritmul nu este dușmanul tău personal — este un motor fără conștiință, care face ce a fost programat să facă. Dușmanii sunt cei care știu cum funcționează motorul și îl folosesc deliberat pentru a-ți umple capul cu frică și ură.</p>
+
+  <div class="red-thread">
+    <strong>Firul roșu — Atenția:</strong> Cel mai prețios lucru pe care îl ai nu este banii sau sănătatea — este atenția ta. Ceea ce alegi să îți ocupe mintea modelează cine ești și cum votezi. Economia atenției a transformat această resursă în marfă. Primul act de rezistență este să îți dai seama că ești ținta.
+  </div>
+</section>
+
+<!-- ═══════════════ CAP. II — ACTORII ONLINE ═══════════════ -->
+<section class="chapter" id="actori">
+  <div class="ch-header">
+    <p class="ch-num">Capitolul II</p>
+    <h2 class="ch-title">Cine vorbește de fapt online — <em>Botul, trolul, influencerul și omul radicalizat</em></h2>
+  </div>
+
+  <p>Când citești un comentariu furios sub o știre sau o postare politică, prima întrebare pe care ar trebui să ți-o pui nu este „are dreptate?" ci „cine scrie asta?". Răspunsul la această întrebare schimbă totul. Există patru categorii de actori în spațiul online al manipulării, și fiecare funcționează diferit.</p>
+
+  <div class="actor-box">
+    <p class="actor-name">Botul — mașinăria fără suflet</p>
+    <p>Un bot este un program de calculator, nu un om. A fost scris pentru a posta comentarii, a da reacții și a redistribui conținut în mod automat, la viteză și scară pe care niciun om nu le-ar putea atinge. <strong>Semnele distinctive:</strong> comentarii cu caractere ciudate sau litere care nu aparțin alfabetului românesc — chirilice, arabe sau semne speciale amestecate în text românesc; postări publicate la ore absurde, în rafale de zeci de mesaje în același minut; conținut identic, cuvânt cu cuvânt, distribuit simultan pe zeci de conturi; profil fără viață reală, creat recent, cu o fotografie prea perfectă sau generată de inteligența artificială.</p>
+  </div>
+
+  <div class="actor-box">
+    <p class="actor-name">Trolul — omul care minte conștient</p>
+    <p>Trolul este, spre deosebire de bot, un om real. Un om plătit sau ideologic convins, care operează deliberat și coordonat pentru a semăna confuzie, ură și neîncredere. Conturile de trol sunt adesea vechi, cultivate ani de zile cu postări normale, pentru a părea autentice — și activate brusc în momente de criză sau campanie electorală. <strong>Semnul caracteristic al trolului:</strong> indiferent de subiectul discuției, trolul ajunge mereu la același mesaj. Nu contribuie la dezbatere, ci declanșează emoții negative și atacă persoane, nu idei.</p>
+  </div>
+
+  <div class="actor-box">
+    <p class="actor-name">Influencerul plătit — omul de bună-credință deviat</p>
+    <p>Unul din șase influenceri din spațiul digital românesc răspândește dezinformare în mod repetat. Unii o fac conștient, pentru bani sau din convingere ideologică. Alții, posibil, nu realizează că au devenit instrumente. <strong>Semnul distinctiv:</strong> schimbarea bruscă de tematică — omul care posta despre rețete, sport sau călătorii devine brusc un comentator politic vehement, cu mesaje aliniate perfect unor narrative externe. Fără disclaimer, fără transparență despre finanțare, fără nuanță.</p>
+  </div>
+
+  <div class="actor-box">
+    <p class="actor-name">Omul radicalizat — victima și propagatorul</p>
+    <p>Cel mai tragic actor: omul real, radicalizat fără să știe. Acesta este vecinul tău, ruda ta, prietenul din copilărie. El crede sincer tot ce postează. Nu minte, nu este plătit, nu are intenții rele. A fost expus, zi de zi, la un flux de conținut emoțional care i-a modelat percepția realității. El este, simultan, victimă și propagator. Tocmai această categorie face cel mai mult rău în relațiile personale — pentru că furia lui este autentică, și este greu să spui cuiva drag că emoțiile lui reale au fost fabricate de altcineva.</p>
+  </div>
+
+  <p><strong>Regula de aur:</strong> nu conta pe cine scrie, conta ce scrie. Verifică afirmația, nu autorul. O minciună spusă de un om real rămâne minciună. Un adevăr spus de un bot rămâne adevăr. Separă persoana de conținut — și verifică conținutul înainte să îl redistribui.</p>
+
+  <div class="hidden-link">
+    <p class="label">Legătură ascunsă — Banalitatea răului și radicalizarea algoritmică</p>
+    <p>Hannah Arendt, analizând procesul lui Adolf Eichmann, a descris „banalitatea răului" — modul în care oameni normali participă la crime monstruoase prin simpla execuție a ordinelor, fără să implice gândirea morală. Experimentul Milgram (1961) a demonstrat că 65% din oameni sunt dispuși să aplice șocuri electrice dureroase unor necunoscuți dacă li se cere de o autoritate. Algoritmul de radicalizare funcționează exact prin același mecanism: elimină gândirea critică, oferă o „autoritate" (algoritmul însuși, prin feedback continuu de aprobări sociale), și normalizează treptat poziții tot mai extreme. Trolul nu este Eichmann — dar mecanismul de neutralizare morală este același.</p>
+  </div>
+</section>
+
+<!-- ═══════════════ CAP. III — CELE 6 MINCIUNI MARI ═══════════════ -->
+<section class="chapter" id="minciuni">
+  <div class="ch-header">
+    <p class="ch-num">Capitolul III</p>
+    <h2 class="ch-title">Cele șase minciuni mari — <em>Și cum le recunoști înainte să te prindă</em></h2>
+  </div>
+
+  <p>Dezinformarea modernă nu mai funcționează prin răspândirea unor falsuri grosolane, ușor de detectat. Funcționează prin amestecarea informațiilor reale cu interpretări distorsionate, embalate emoțional, astfel încât să se redistribuie viral înainte ca cineva să le verifice. Cercetătorii au identificat în 2026 șase mari categorii de narrative manipulatoare care domină spațiul digital românesc. Cunoașterea lor este un vaccin.</p>
+
+  <div class="lie-box">
+    <p class="lie-title">1. Propaganda anti-occidentală</p>
+    <p>Cea mai dominantă narativă identificată în spațiul românesc, cu sursă externă bine documentată. Mesajele urmăresc să convingă că Uniunea Europeană ne exploatează, că NATO ne pregătește pentru un război pe care nu îl vrem, că Occidentul ne colonizează cultural și economic. Exploatează frustrări reale — inegalități economice, nemulțumiri sociale legitime — și le îmbracă într-un discurs anti-occidental bine articulat.</p>
+    <p class="vaccine">🛡 Vaccinul: pune întotdeauna întrebarea comparativă. Față de ce alternativă concretă ar fi mai bine? Uită-te la țările vecine care nu au ales drumul european și compară standardul de viață, libertățile, securitatea.</p>
+  </div>
+
+  <div class="lie-box">
+    <p class="lie-title">2. Frica de război și mobilizare</p>
+    <p>Această narativă a produs, în România anului 2025, unele dintre cele mai spectaculoase falsuri: ordine fictive de mobilizare a rezerviștilor, anunțuri false despre chemarea tinerilor la instrucție militară, scenarii despre evacuarea populației. Ministerul Apărării a fost nevoit să dezmintă în mod repetat aceste fabricații. Mecanismul este simplu și eficient: frica acută paralizează judecata critică și determină redistribuirea masivă a mesajului înainte de orice verificare.</p>
+    <p class="vaccine">🛡 Vaccinul: informațiile despre mobilizare sau stare de urgență vin exclusiv prin canale oficiale ale statului — Ministerul Apărării, Inspectoratul General pentru Situații de Urgență, televiziunile publice. Dacă un mesaj de acest tip vine pe WhatsApp de la un prieten, nu este oficial.</p>
+  </div>
+
+  <div class="lie-box">
+    <p class="lie-title">3. Colapsul economic iminent</p>
+    <p>Leul se prăbușește, băncile vor îngheța depozitele, vine foametea — aceste mesaje apar cu regularitate și au un efect economic real: provoacă retrageri masive de numerar, alimentează inflația prin panică și subminează încrederea în sistemul financiar.</p>
+    <p class="vaccine">🛡 Vaccinul: cursul valutar se verifică pe site-ul Băncii Naționale a României. Informațiile despre bănci vin de la banca ta, direct, nu de pe rețele sociale.</p>
+  </div>
+
+  <div class="lie-box">
+    <p class="lie-title">4. Dezinformarea medicală</p>
+    <p>De la conspirații despre vaccinuri la cure miraculoase ascunse de medici și farmacii, această categorie exploatează un caz real nefericit și îl generalizează la o conspirație globală. Funcționează pentru că sistemul medical are probleme reale — accesibilitate, corupție, birocrație — care alimentează neîncrederea. România deține în 2024–2025 recordul trist de 85% din cazurile de rujeolă din întreaga Uniune Europeană — boală prevenibilă prin vaccinare.</p>
+    <p class="vaccine">🛡 Vaccinul: cere studii, nu testimoniale individuale. Întreabă: câți oameni au murit comparativ cu câți au supraviețuit? Un caz singular, oricât de tragic, nu demonstrează o conspirație sistemică.</p>
+  </div>
+
+  <div class="lie-box">
+    <p class="lie-title">5. Atacul asupra instituțiilor statului</p>
+    <p>Toți politicienii sunt hoți, justiția este vândută, armata nu ne protejează, statul este inamicul cetățeanului — aceste mesaje urmăresc un scop precis: dacă nu mai crezi în niciuna dintre instituțiile care te protejează, devii dependent de o singură sursă alternativă, care se autoprezintă ca singura voce corectă.</p>
+    <p class="vaccine">🛡 Vaccinul: critica specifică este sănătoasă și necesară. Generalizarea absolută — toți, nimeni, întotdeauna, niciodată — este semnul manipulării. Există politicieni corupți; nu toți politicienii sunt corupți în aceeași măsură.</p>
+  </div>
+
+  <div class="lie-box">
+    <p class="lie-title">6. Interferența electorală</p>
+    <p>Această narativă apare cu intensitate maximă în perioadele de vot și urmărește două obiective simultane: fie suprimarea votului prin descurajare, fie direcționarea lui spre candidații care servesc agenda externă. Mesajele tipice sunt: alegerile sunt furate, votul nu contează, toți candidații sunt la fel. Campania prezidențială din 2025 a fost marcată de interferențe externe vizibile, semnalate public de Ministerul Afacerilor Externe.</p>
+    <p class="vaccine">🛡 Vaccinul: gândește-te cine beneficiază dacă nu votezi. Abstența nu este neutralitate — este un vot acordat celor care mobilizează mai bine masa lor electorală.</p>
+  </div>
+</section>
+
+<!-- ═══════════════ CAP. IV — ROMÂNIA VULNERABILĂ ═══════════════ -->
+<section class="chapter" id="romania-vulnerabila">
+  <div class="ch-header">
+    <p class="ch-num">Capitolul IV</p>
+    <h2 class="ch-title">România și rănile ei deschise — <em>De ce suntem mai vulnerabili</em></h2>
+  </div>
+
+  <p>România nu este o victimă întâmplătoare a dezinformării. Este o țintă aleasă, iar alegerea are logică. Există vulnerabilități specifice ale societății românești care o fac mai permeabilă la manipulare decât multe alte țări europene. Înțelegerea acestor vulnerabilități nu este un act de autoflagelare națională — este prima condiție a vindecării.</p>
+
+  <div class="warning-box">
+    <p class="label">Vulnerabilitate 1 — Absența educației media</p>
+    <p>Generații întregi de români au crescut fără să fie învățate cum să citească o știre critic, cum să verifice o sursă, cum să distingă opinia de fapt. Gândirea critică nu a fost o prioritate în curriculum-ul școlar — și această lacună se plătește acum, scump, în fiecare zi.</p>
+  </div>
+
+  <div class="warning-box">
+    <p class="label">Vulnerabilitate 2 — Neîncrederea structurală, moștenire a comunismului</p>
+    <p>Deceniile de propagandă de stat, de minciuni oficiale sistematice, de instituții folosite ca instrumente de represiune au lăsat o urmă adâncă în psihologia colectivă românească. Românii au învățat, cu prețul suferinței, să nu creadă ce spune statul. Această lecție a fost necesară și corectă în contextul ei. Dar aplicată automat, fără discernământ, în România democratică de astăzi, ea devine o armă în mâinile celor care vor să submineze tocmai instituțiile care ne protejează — armata, presa liberă, justiția independentă.</p>
+  </div>
+
+  <div class="warning-box">
+    <p class="label">Vulnerabilitate 3 — Dominanța TikTok ca sursă de informație</p>
+    <p>TikTok nu este o platformă de informare — este o platformă de divertisment, cu un algoritm optimizat pentru emoție brută, nu pentru acuratețe. Faptul că milioane de români își formează opinia politică după ce derulează câteva zeci de videoclipuri pe TikTok, în lipsa oricărei contraponderi editoriale, este una dintre cele mai grave probleme de igienă informațională ale momentului.</p>
+  </div>
+
+  <div class="warning-box">
+    <p class="label">Vulnerabilitate 4 — Influența externă deliberată</p>
+    <p>Serviciile de informații și analiști independenți au documentat implicarea unor actori externi — în special legați de Rusia — în modelarea spațiului informațional românesc. Aceasta nu este o teorie a conspirației. Este o realitate documentată de instituțiile de securitate ale statului român, confirmate de partenerii NATO și UE. Campania pentru alegerile prezidențiale din 2025 a fost marcată de interferențe externe vizibile, semnalate public de Ministerul Afacerilor Externe chiar în ziua votului.</p>
+  </div>
+
+  <p>Aceste patru vulnerabilități nu acționează separat. Ele se compun și se amplifică reciproc. Un om fără educație media, cu neîncredere reflexă în instituții, informat exclusiv de TikTok și expus zilnic la conținut produs sau amplificat de actori externi este, fără să știe, exact profilul pe care manipulatorii și l-au imaginat ca țintă ideală.</p>
+</section>
+
+<!-- ═══════════════ CAP. V — GALAȚI ═══════════════ -->
+<section class="chapter" id="galati">
+  <div class="ch-header">
+    <p class="ch-num">Capitolul V</p>
+    <h2 class="ch-title">Galați, 29 mai 2026 — <em>O dronă, un bloc și o societate testată</em></h2>
+  </div>
+
+  <p>La ora două noaptea, pe 29 mai 2026, o dronă rusească de tip Geran-2 a lovit etajul zece al unui bloc de locuințe din Galați. Explozia a rănit o femeie de cincizeci și trei de ani și un băiat de paisprezece ani. Aproape șaptezeci de persoane au fost evacuate. Incendiul a mistuit apartamentul direct afectat.</p>
+
+  <p>Drona nu era un accident izolat. Era parte dintr-un roi de patruzeci și trei de drone rusești lansate în aceeași noapte, dintre care una a deviat de pe traiectoria sa inițială după ce a fost lovită deasupra orașului ucrainean Reni și a intrat pe teritoriul românesc. Ministerul Apărării a identificat drona fără echivoc — tip, fabricație, număr de serie. Ministrul Apărării, Radu Miruță, a invitat oficial pe oricine nu crede să vină la sediul Direcției Generale de Informații a Armatei și să verifice personal.</p>
+
+  <div class="data-box">
+    <p class="label">Răspunsul statului român — fapte verificate</p>
+    <p>Președintele Nicușor Dan a convocat de urgență Consiliul Suprem de Apărare a Țării. A declarat consulul general al Rusiei de la Constanța <em>persona non grata</em> și a ordonat închiderea consulatului — prima măsură diplomatică de acest gen luată de o țară membră UE față de Rusia în contextul acestui război. Secretarul general NATO, Mark Rutte, a sunat personal președintele și a asigurat solidaritatea absolută a Alianței.</p>
+  </div>
+
+  <p>Rusia a reacționat exact după manualul său clasic. Negare totală — „nu există dovezi". Contraacuzație — rusofobie, provocare occidentală. Amenințare voalată — din partea Ministerului rus de Externe, care a avertizat România să nu expună inutil viețile și sănătatea propriilor cetățeni. Toate răspunsurile de manual, previzibile până la ultimul cuvânt.</p>
+
+  <p>Și totuși tabloul cel mai dureros nu a venit de la Moscova. A venit de acasă. Președintele care a venit la Galați, care a vizitat victimele la spital, care a convocat CSAT și a luat măsuri diplomatice curajoase, a fost huiduit minute în șir de o parte dintre oamenii adunați în fața blocului. Au strigat demisia. Nu l-au huiduit pe Putin. L-au huiduit pe omul care a venit să îi vadă.</p>
+
+  <p>Această scenă trebuie înțeleasă, nu condamnată în grabă. Oamenii din Galați erau speriați, furioși și îndreptățiți să fie furioși. Drona rusă a lovit blocul lor. Dar Rusia era departe, abstractă, inaccesibilă emoțional. Președintele era în față, concret, responsabil în ochii lor de toate lucrurile care nu merseseră bine. Furia s-a descărcat pe ce era accesibil. Acesta este un mecanism psihologic uman, nu o trădare națională.</p>
+
+  <div class="warning-box">
+    <p class="label">Ce s-a întâmplat simultan online</p>
+    <p>Bula celor radicalizați s-a mobilizat instant. Au apărut narativele că drona nu era rusească, că totul era o provocare a Occidentului, că armata română a mințit, că președintele a profitat de incident în scopuri politice. Oameni care credeau sincer că Rusia este o putere prietenoasă și că NATO este dușmanul au trebuit să facă față unui fapt brutal: o dronă rusească a rănit un copil de paisprezece ani într-un bloc românesc. Incapacitatea de a integra acest fapt în sistemul lor de credințe a produs nu o revizuire a convingerilor, ci o intensificare a atacurilor la adresa celor care confirmau realitatea — armata, președinția, presa liberă.</p>
+  </div>
+
+  <div class="red-thread">
+    <strong>Istoricul Vladimir Tismăneanu:</strong> „Mizele dronei de la Galați sunt imense. Marile evenimente istorice încep în țări mici. Galați nu a fost un accident. A fost un test." Al Rusiei față de România, și al României față de sine.
+  </div>
+
+  <div class="hidden-link">
+    <p class="label">Legătură ascunsă — Atacul kinetic și cel cibernetic sunt sincronizate</p>
+    <p>Documentat în Ucraina, octombrie 2022: Grupul Sandworm (GRU rus) a tăiat curentul electric într-un oraș ucrainean exact în momentul în care 84 de rachete de croazieră și 24 de drone loveau 20 de orașe. Atacul cibernetic a venit primul, a perturbat comanda și controlul, și a amplificat haosul atacului fizic. La Galați, atacul informațional (narativele false) a sosit simultan cu drona. Cele două fronturi — kinetic și informațional — sunt instrumente complementare ale aceleiași operațiuni. (Legat de Capitolul IX)</p>
+  </div>
+</section>
+
+<!-- ═══════════════ CAP. VI — ALGORITMUL ═══════════════ -->
+<section class="chapter" id="algoritm">
+  <div class="ch-header">
+    <p class="ch-num">Capitolul VI</p>
+    <h2 class="ch-title">Algoritmul care lucrează împotriva ta — <em>Fără să știi</em></h2>
+  </div>
+
+  <p>Există o componentă a acestei povești despre care se vorbește prea puțin, pentru că este invizibilă: mașinăria care decide ce vezi și ce nu vezi pe ecranul tău. Se numește algoritm de recomandare, și funcționează în mod continuu, cu un singur obiectiv: să te țină cât mai mult timp pe platformă.</p>
+
+  <p>Algoritmul nu citește știrile. Nu înțelege politica. Nu știe ce este adevărul. Știe un singur lucru: ce conținut te face să stai mai mult, să dai mai multe reacții, să comentezi mai agresiv. Și a descoperit, prin miliarde de experimente pe utilizatori reali, că frica și furia sunt combustibilul cel mai eficient. O postare care te înfurie îți va ocupa atenția mult mai mult decât una care te informează neutru. Deci algoritmul va distribui postarea care te înfurie.</p>
+
+  <div class="case-box">
+    <p class="label">Experiment documentat — radicalizarea unui cont nou</p>
+    <p>Un cont nou de TikTok, creat de un jurnalist care a declarat vârsta de șaisprezece ani, a început să urmărească conținut neutru — muzică, sport, gătit. În mai puțin de două ore, algoritmul îi servea conținut de conspirație, conținut extremist și dezinformare politică. Nu pentru că utilizatorul le căutase. Pentru că algoritmul a detectat că acel tip de conținut genera mai multă interacțiune. Aceasta se numește <strong>radicalizare algoritmică</strong>, și afectează oameni normali, educați, cu bun simț — nu doar pe cei vulnerabili.</p>
+  </div>
+
+  <p><strong>Ce poți face față de algoritm?</strong></p>
+  <p>Fii conștient că ceea ce vezi nu este o reflecție a realității, ci o selecție optimizată pentru emoția ta. Urmărește activ surse verificate și le dă reacții pozitive — astfel îl înveți pe algoritm ce vrei să primești. Ia pauze: perioadele de detox digital nu sunt un lux — sunt igienă mentală. Nu redistribui nimic înainte de douăzeci și patru de ore dacă subiectul este unul care te-a înfuriat. Furia grăbește redistribuirea; pauzele previn răspândirea dezinformării.</p>
+
+  <div class="hidden-link">
+    <p class="label">Legătură ascunsă — Sistemul glimfatic și știrile alarmiste</p>
+    <p>Cortizolul cronic ridicat — produs de expunerea continuă la știri alarmiste și conținut emoțional negativ — reduce volumul hipocampului, zona critică pentru formarea memoriei noi. Demonstrat imagistic la persoanele cu PTSD și stres cronic. Consumul prelungit de conținut care activează frica și furia nu este neutru neurologic. Este literalmente dăunător structurii creierului. Igienă informațională nu este un concept metaforic. Este neurologie preventivă. (Legat de Documentul D)</p>
+  </div>
+</section>
+
+<!-- ═══════════════ CAP. VII — OMUL RADICALIZAT ═══════════════ -->
+<section class="chapter" id="radicalizat">
+  <div class="ch-header">
+    <p class="ch-num">Capitolul VII</p>
+    <h2 class="ch-title">Cum vorbești cu un om radicalizat — <em>Fără să pierzi omul</em></h2>
+  </div>
+
+  <p>Dacă ai în viața ta un om radicalizat — un prieten, un frate, un coleg — știi că dezbaterea directă nu funcționează. Cu cât îl contrazici mai direct, cu atât se fixează mai adânc în convingerile lui. Psihologii numesc acest fenomen <strong>backfire effect</strong> — contrafocul: atacul la adresa convingerilor unui om radicalizat îi întărește, nu îi slăbește, convingerile.</p>
+
+  <p>Există câteva principii care funcționează, validate prin cercetare și practică:</p>
+
+  <p><strong>Nu ataca convingerile, investighează sursele.</strong> Nu „asta e o minciună", ci „de unde ai citit asta? Ce altceva a mai scris sursa respectivă?" Îl ajuți să aplice gândire critică, nu îi dai motiv să se apere.</p>
+
+  <p><strong>Confirmă emoția, nu conținutul.</strong> „Înțeleg că ești îngrijorat de ce se întâmplă" este diferit de „ai dreptate că totul e conspirație". Validarea emoției păstrează relația deschisă. Validarea conținutului fals o închide.</p>
+
+  <p><strong>Pune întrebări Socratice, nu afirmații.</strong> „Dacă asta ar fi adevărat, la ce ar trebui să ne așteptăm să mai vedem?" Îl ajuți să gândească consecințele logice ale convingerilor sale, fără să îl ataci direct.</p>
+
+  <p><strong>Alege momentul potrivit.</strong> Nu contrazice pe cineva în public, în fața altora. Rușinea publică întărește radicalizarea. Conversațiile private, fără audiență, sunt mult mai eficiente.</p>
+
+  <p><strong>Acceptă că nu îl poți schimba tu singur.</strong> Ieșirea din radicalizare este un proces lung, adesea declanșat de un eveniment personal — un fapt care nu se poate reconcilia cu narativa, o dezamăgire profundă față de comunitatea radicalizată. Poți planta semințe. Nu poți forța recoltarea.</p>
+
+  <div class="red-thread">
+    <strong>Principiul esențial:</strong> Relația cu omul este mai valoroasă decât victoria în dezbatere. Dacă pierzi relația, pierzi și singura cale de influență. Dacă păstrezi relația, rămâi o voce la care el poate apela când sistemul de credințe al radicalizării va începe, inevitabil, să crape.
+  </div>
+</section>
+
+<!-- ═══════════════ CAP. VIII — SILICIUL ═══════════════ -->
+<section class="chapter" id="silicon">
+  <div class="ch-header">
+    <p class="ch-num">Capitolul VIII</p>
+    <h2 class="ch-title">Siliciul ca putere — <em>Noul petrol al secolului XXI</em></h2>
+  </div>
+
+  <p>Există o resursă strategică despre care puțini oameni vorbesc cu adevărat, deși ea stă la baza fiecărui ecran, fiecărui server, fiecărei arme inteligente și fiecărei rețele de comunicații din lume: siliciul — sau mai precis, cipurile de siliciu fabricate la dimensiuni sub zece nanometri. <strong>Siliciul este noul petrol.</strong> Și ne comportăm față de el exact cum ne-am comportat față de petrol: cu dependențe geografice periculoase, cu geopolitică agresivă și cu o lipsă sistematică de diversificare.</p>
+
+  <p>Totul pornește de la un întrerupător. Un tranzistor este, în esența lui, cel mai simplu obiect imaginabil: un comutator electronic care poate fi deschis sau închis. Această proprietate banală, ridicată la scara a câteva sute de miliarde de repetări pe un cip mai mic decât unghia ta, este fundația întregii civilizații digitale. La nodurile actuale de doi nanometri, suntem la limita fizicii cunoscute — grosimea canalului prin care curge curentul electric este de câteva zeci de atomi.</p>
+
+  <div class="data-box">
+    <p class="label">Harta puterii globale — cine controlează ce</p>
+    <p><strong>Designul cipurilor</strong> — dominat de SUA: Intel, NVIDIA, AMD, Qualcomm, Google (TPU), Apple (M-series).<br>
+    <strong>Fabricarea cipurilor avansate</strong> — dominată de Taiwan: TSMC produce 92% din cipurile avansate sub 10nm. O singură companie, pe o insulă, controlând infrastructura militară și economică a întregii lumi.<br>
+    <strong>Mașinile de fabricare</strong> — monopol absolut olandez: ASML produce singurele mașini EUV capabile să fabrice cipuri sub 7nm. Fiecare mașină costă ~200 milioane euro, cântărește 180 tone. Nimeni nu poate copia asta în mai puțin de 10-15 ani.<br>
+    <strong>Memoria HBM pentru AI</strong> — Coreea de Sud și SUA: SK Hynix, Samsung, Micron. China nu produce HBM — vulnerabilitate strategică masivă.<br>
+    <strong>Materii prime critice</strong> — China controlează ~85% din producția globală de pământuri rare esențiale pentru electronice.</p>
+  </div>
+
+  <p>Concentrarea geografică a acestei industrii este vulnerabilitatea fundamentală a civilizației noastre actuale. Dacă o singură verigă se rupe — dintr-un conflict militar, dintr-un dezastru natural, dintr-o decizie politică — efectele se propagă global în câteva luni.</p>
+
+  <div class="data-box">
+    <p class="label">Energia — constrângerea pe care nimeni nu o menționează</p>
+    <p>Un telefon modern consumă 5-10 wați. Un procesor grafic profesional NVIDIA H100 pentru AI consumă <strong>700 de wați</strong>. Un singur rack cu opt astfel de procesoare consumă 10-12 kilowați — cât o casă medie. Un datacenter mare pentru AI consumă <strong>100-500 de megawați — cât un oraș mediu</strong>. Proiecțiile pentru 2030: datacenter-ele vor consuma 8-10% din producția globală de electricitate. Microsoft, Google și Amazon au semnat contracte cu centrale nucleare tocmai pentru că energia solară și eoliană nu poate asigura fluxul continuu necesar. Promisiunile de neutralitate carbon ale companiilor tech și realitatea investițiilor energetice trăiesc în universuri paralele.</p>
+  </div>
+
+  <p>România, în acest peisaj, are un paradox propriu. Bitdefender — fondat la București în 2001 — se clasează constant în primele trei companii de securitate cibernetică din lume în teste independente. România are unul dintre cele mai rapide internete fixe din lume ca viteză brută. Și totuși, rețeaua operatorului principal este construită parțial pe echipamente Huawei — producător chinez supus Legii Securității Naționale din 2017, care obligă companiile să coopereze cu serviciile de informații la cerere, fără posibilitate de refuz legal. Legea 5G de excludere a furnizorilor cu risc ridicat există în România din 2021. La mijlocul anului 2026, nu a fost aplicată.</p>
+
+  <div class="red-thread">
+    <strong>Firul roșu — Siliciul:</strong> Cine controlează cipurile controlează armata, economia și comunicațiile. Cine controlează mașinile de fabricare a cipurilor controlează cine poate fabrica cipuri. Cine controlează energia controlează cine poate rula AI. Aceste trei lanțuri de control sunt mai puternice, în conflictul geopolitic al secolului XXI, decât multe arsenale nucleare. România este în interiorul acestui joc, cu vulnerabilități reale și cu active reale pe care nu le-a valorificat strategic.
+  </div>
+</section>
+
+<!-- ═══════════════ CAP. IX — RĂZBOIUL CIBERNETIC ═══════════════ -->
+<section class="chapter" id="razboi-cibernetic">
+  <div class="ch-header">
+    <p class="ch-num">Capitolul IX</p>
+    <h2 class="ch-title">Războiul cibernetic — <em>Când pacea a încetat să existe</em></h2>
+  </div>
+
+  <p>Există o concepție profund greșită, dar universal împărtășită, despre natura conflictului modern: că există o linie clară între pace și război. Această concepție nu mai corespunde realității din 2025–2026. <strong>Nu mai există timp de pace și timp de război.</strong> Există un continuum de presiune permanentă, cu momente de vârf. Frontul este invizibil, dispersat în miliarde de dispozitive conectate, și se desfășoară simultan pe toate continentele, 24 de ore pe zi, 365 de zile pe an.</p>
+
+  <div class="case-box">
+    <p class="label">Volt Typhoon — China în infrastructura SUA, 5 ani nedetectat</p>
+    <p>Grupul de hackeri Volt Typhoon, sponsorizat de statul chinez, a menținut acces persistent în rețelele de infrastructură critică ale Statelor Unite timp de cel puțin <strong>cinci ani</strong> înainte de a fi detectat. Timp de cinci ani, operatori chinezi legați de Armata Populară de Eliberare au stat în interiorul sistemelor care controlează comunicațiile, energia, transportul și apa în Statele Unite. <strong>Nu au furat date. Nu au perturbat nimic vizibil. Au stat. Și au așteptat.</strong> CISA a formulat cu o claritate rară: actorii se prepoziționau în rețelele de infrastructură critică pentru a putea, la un moment dat, să perturbe funcțiile esențiale în cazul unei escaladări — mai precis, al unui conflict militar pentru Taiwan.</p>
+  </div>
+
+  <div class="case-box">
+    <p class="label">Salt Typhoon — China în telecomunicațiile SUA, 3 ani nedetectat</p>
+    <p>Alt grup chinez a compromis cel puțin nouă mari operatori de telecomunicații americani — AT&amp;T, Verizon, T-Mobile, Lumen Technologies și alții — menținând acces timp de <strong>până la trei ani</strong>. Scopul nu era interceptarea conversațiilor aleatorii, ci accesarea sistemelor de wiretapping legal pe care legea americană le impune operatorilor — adică <strong>să știe exact cine este supravegheat de FBI</strong>. Până în august 2025, FBI a confirmat că Salt Typhoon compromisese <strong>peste 200 de organizații din 80 de țări</strong>.</p>
+  </div>
+
+  <div class="case-box">
+    <p class="label">Sandworm și atacul sincronizat din Ucraina — octombrie 2022</p>
+    <p>Grupul Sandworm (GRU rus) a atacat o substație electrică ucraineană exact în momentul în care 84 de rachete de croazieră și 24 de drone loveau 20 de orașe din toată țara. <strong>Atacul cibernetic și cel cinetic au fost sincronizate.</strong> Cel digital a venit primul, a perturbat comanda și controlul, și a amplificat haosul provocat de cel fizic. Aceasta nu mai este un atac cibernetic. Acesta este warfare integrat.</p>
+  </div>
+
+  <div class="case-box">
+    <p class="label">XZ Utils — o operațiune de stat în lanțul de aprovizionare open source</p>
+    <p>Un contributor misterios, cunoscut ca „Jia Tan", a contribuit timp de <strong>doi ani și jumătate</strong> la o bibliotecă de compresie prezentă pe practic fiecare distribuție majoră de Linux (XZ Utils). Contribuții mici, legitime, care construiau credibilitate. Presiuni subtile pe un maintainer epuizat pentru a-i ceda drepturi. Și, în final, un backdoor sofisticat în versiunile 5.6.0 și 5.6.1 care ar fi permis acces de la distanță, neautentificat, la potențial <strong>milioane de servere</strong>. A fost descoperit din pură întâmplare — un inginer Microsoft a observat că autentificările SSH rulau cu 500 de milisecunde mai lent. O jumătate de secundă. Singurul semn că ceva era greșit. Trei ani de răbdare. Câteva commits dintr-o bibliotecă de compresie. Milioane de servere potențial compromise. Nivel de sofisticare operativă care depășește orice grup criminal — seamănă cu un program de stat.</p>
+  </div>
+
+  <div class="case-box">
+    <p class="label">România — date concrete din 2024</p>
+    <p>Raportul anual al Directoratului Național de Securitate Cibernetică (DNSC) din 2024 a consemnat o creștere de <strong>286,8% a incidentelor malware</strong> față de anul precedent. Printre cele mai grave: un atac ransomware care a paralizat simultan <strong>26 de spitale</strong> din întreaga țară. Infrastructura electorală a României a suferit un atac masiv în noiembrie 2024. Curtea Constituțională a României a anulat primul tur al alegerilor prezidențiale, invocând parțial interferențele cibernetice și campaniile de influență de origine rusă.</p>
+  </div>
+
+  <div class="data-box">
+    <p class="label">De ce democrațiile sunt mai vulnerabile structural</p>
+    <p><strong>80-90%</strong> din infrastructura critică a oricărei națiuni occidentale este deținută și operată de entități <em>private</em> — companii cu obligații față de acționari, nu față de securitatea națională.<br>
+    <strong>Transparența</strong> — valorile centrale ale democrației înseamnă că vulnerabilitățile sunt mai expuse. China și Rusia nu au această constrângere.<br>
+    <strong>Ciclul electoral</strong> — un program de securitate care necesită 10 ani depășește orizontul oricărui guvern democratic. Adversarii planifică în orizonturi de decenii.<br>
+    <strong>Dependența economică</strong> — occidentul a construit o interdependență economică cu China în credința că integrarea economică va genera convergență politică. S-a dovedit parțial greșită.<br>
+    Directiva NIS2 (2022) a UE a fost transpusă la timp de <strong>doar 2 din 27 de state membre</strong>.</p>
+  </div>
+</section>
+
+<!-- ═══════════════ CAP. X — GLASSWING ═══════════════ -->
+<section class="chapter" id="glasswing">
+  <div class="ch-header">
+    <p class="ch-num">Capitolul X</p>
+    <h2 class="ch-title">Project Glasswing — <em>Cel mai ambițios proiect de securitate din istoria internetului</em></h2>
+  </div>
+
+  <p>În martie 2026, o greșeală banală a cuiva de la Anthropic — o companie americană de inteligență artificială — a schimbat pentru câteva zile agenda întregii industrii tehnologice mondiale. Cineva a stocat documente interne ale companiei într-un loc accesibil publicului pe internet, fără să vrea. Jurnaliști și cercetători independenți au găsit acele documente și au citit ceva care părea greu de crezut.</p>
+
+  <p>Anthropic construise în secret un model de inteligență artificială pe care îl numise <strong>Claude Mythos</strong>. Nu era un asistent obișnuit. Era un sistem capabil să citească cod informatic la o scară și cu o profunzime pe care niciun om nu o poate atinge, să găsească fisuri ascunse în acel cod, și să construiască singur metode de a exploata acele fisuri. Fără ajutor uman. Autonom. Rapid. Ieftin.</p>
+
+  <p>Orice program informatic, oricât de bine scris, conține greșeli. Când o vulnerabilitate nu este cunoscută de nimeni — nici de cei care au scris codul — se numește <strong>zero-day</strong>. Cel care descoperă primul o astfel de vulnerabilitate are o putere enormă. Timp de decenii, găsirea zero-day-urilor a fost un meșteșug rar. Necesita ani de experiență și sute de ore de muncă. O echipă bună putea găsi câteva pe an. <strong>Mythos a găsit mii în câteva săptămâni.</strong></p>
+
+  <div class="case-box">
+    <p class="label">Ce a găsit Mythos — fapte concrete</p>
+    <p><strong>FreeBSD</strong> (folosit de Netflix, PlayStation, componente WhatsApp): o vulnerabilitate de <strong>17 ani</strong> care permitea oricui, fără niciun cont sau parolă, să obțină control total asupra unui server. Costul rulării care a găsit bugul: <strong>sub 50 de dolari</strong>.<br><br>
+    <strong>Firefox</strong> (unul dintre cele mai populare browsere): Mythos a găsit <strong>271 de vulnerabilități</strong> într-o singură sesiune de analiză. Mozilla le-a reparat pe toate și a lansat o actualizare de urgență.<br><br>
+    Nicholas Carlini, unul dintre cei mai respectați specialiști în securitatea AI din lume, a spus public: în câteva săptămâni cu Mythos a găsit mai multe bug-uri de securitate reale decât găsise în <strong>toată cariera lui combinată</strong>.</p>
+  </div>
+
+  <p>Anthropic a calculat că dacă ar lansa Mythos publicului, cineva cu intenții rele ar putea achiziționa acces la el înainte ca vulnerabilitățile descoperite să fie reparate. Mii de sisteme critice ar deveni brusc vulnerabile la atacuri pe care nimeni nu știe cum să le apere. Dar nepublicarea nu înseamnă că problema dispare. Înseamnă doar că se câștigă timp. Și tocmai de aceea a apărut Project Glasswing.</p>
+
+  <div class="data-box">
+    <p class="label">Ce este Project Glasswing</p>
+    <p>Anthropic a format o coaliție de companii care controlează cea mai mare parte a infrastructurii digitale mondiale și le-a dat acces controlat la Mythos, cu o singură condiție: să îl folosească exclusiv pentru a găsi și repara vulnerabilități în propriile sisteme.<br><br>
+    <strong>Parteneri fondatori:</strong> Amazon Web Services, Apple, Broadcom, Cisco, CrowdStrike, Google, JPMorgan Chase, Linux Foundation, Microsoft, NVIDIA, Palo Alto Networks — companii ale căror sisteme sunt folosite zilnic de miliarde de oameni.<br><br>
+    Anthropic a angajat <strong>până la 100 de milioane de dolari</strong> în credite de utilizare și a donat 4 milioane de dolari organizațiilor care susțin securitatea software-ului open source. A extins accesul și la alte 40 de organizații care mențin cod critic pentru internet.<br><br>
+    <strong>Numele</strong> vine de la fluturele glasswing, <em>Greta oto</em>, un fluture tropical cu aripi transparente. Metafora: vulnerabilitățile devin vizibile — la fel cum aripi care par să nu existe îți permit totuși să zbori, bug-urile care par să nu existe sunt acolo, doar că nu le poți vedea. Glasswing le face vizibile.</p>
+  </div>
+
+  <div class="hidden-link">
+    <p class="label">Legătură ascunsă — Glasswing și Teologia</p>
+    <p>„Nu există nimic ascuns care să nu iasă la lumină, și nimic tainic care să nu devină cunoscut" (Luca 8:17). Numele Project Glasswing și misiunea sa — a face vizibile vulnerabilitățile invizibile — are o rezonanță cu un principiu teologic fundamental: transparența ca principiu de restaurare. Întunericul (vulnerabilitatea nepatchuită, codul corupt, minciuna nedezminițită) are putere tocmai prin invizibilitate. Lumina (auditul, transparența, dezminirea) îi ia puterea. Nu este o coincidență că cel mai ambițios proiect defensiv al erei digitale se numește după un fluture cu aripi transparente. (Legat de Documentul A)</p>
+  </div>
+
+  <p>Fiecare vulnerabilitate reparată înainte de a fi exploatată este un atac care nu s-a întâmplat. Un cont bancar care nu a fost golit. Un spital al cărui sistem nu a fost blocat de ransomware. O rețea electrică care nu a fost oprită. Securitatea informatică a fost mult timp o problemă abstractă pentru utilizatorul obișnuit. Glasswing este o reamintire că acel „undeva în culise" este direct conectat la viața ta concretă.</p>
+</section>
+
+<!-- ═══════════════ CAP. XI — CE POȚI FACE ═══════════════ -->
+<section class="chapter" id="ce-faci">
+  <div class="ch-header">
+    <p class="ch-num">Capitolul XI</p>
+    <h2 class="ch-title">Ce poți face — <em>Reziliența nu este paranoie</em></h2>
+  </div>
+
+  <p>Securitatea individuală în fața amenințărilor de nivel statal nu înseamnă să devii o fortăreață inatacabilă. Înseamnă să ridici suficient costul unui atac încât să devii o țintă mai puțin atractivă, și să limitezi daunele în cazul în care un atac reușește totuși. Aceasta este gândirea corectă: nu paranoie, ci threat modelling realist.</p>
+
+  <h3>Reziliență informațională</h3>
+
+  <p><strong>Regula celor 24 de ore:</strong> nu redistribui nicio știre care te-a înfuriat înainte de 24 de ore. Furia grăbește redistribuirea dezinformării. Pauzele o previn.<br>
+  <strong>Verifică sursa, nu autorul:</strong> un bot poate spune adevărul, un om de bună credință poate răspândi minciuni sincere. Contează afirmația, nu identitatea.<br>
+  <strong>Caută cel puțin două surse independente</strong> pentru orice informație care ți se pare importantă sau înfricoșătoare.<br>
+  <strong>Urmărește instituțiile direct:</strong> DNSC, Ministerul Apărării, BNR au pagini oficiale. Informațiile serioase vin de acolo, nu de pe WhatsApp.<br>
+  <strong>Detox digital planificat:</strong> perioade fără rețele sociale nu sunt lux — sunt igienă neurală.</p>
+
+  <h3>Reziliență digitală</h3>
+
+  <p><strong>VPN pe router, nu pe dispozitiv individual:</strong> un VPN configurat pe router protejează tot traficul din casă — telefoane, televizoare smart, laptopuri — criptat față de operatorul de internet. Mullvad (5 euro/lună, jurisdicție suedeză UE) a demonstrat în practică că nu păstrează loguri — când autoritățile suedeze au confiscat servere în 2023, nu au găsit date de utilizator, pentru că nu existau.<br>
+  <strong>DNS criptat:</strong> în mod implicit, toate întrebările pe care le pui internetului trec prin serverele DNS ale operatorului tău, în clar. Servicii ca NextDNS sau AdGuard Home rezolvă DNS-ul criptat și pot bloca simultan malware și tracking la nivel de rețea.<br>
+  <strong>Actualizări prompte:</strong> majoritatea atacurilor cibernetice de succes exploatează vulnerabilități cunoscute, pentru care există patch-uri, dar utilizatorii nu au actualizat. Actualizările nu sunt opționale.<br>
+  <strong>Autentificare în doi pași</strong> pe toate conturile importante — email, bancă, social media. O măsură simplă care blochează 99% din atacurile de preluare a conturilor.<br>
+  <strong>Parole diferite pentru fiecare serviciu,</strong> gestionate printr-un manager de parole (Bitwarden — open source, gratuit, audit independent).</p>
+
+  <div class="red-thread">
+    <strong>Concluzia acestui document:</strong> Există un fir care leagă toate lucrurile pe care le-am discutat — nu un fir tehnic, ci un fir de putere. Cine controlează atenția ta, controlează alegerile tale. Cine controlează cipurile, controlează armata și economia. Cine controlează narativa, controlează istoria. Înțelegerea acestor mecanisme nu este un privilegiu al experților. Este, în lumea în care trăim, o condiție a libertății.
+  </div>
+</section>
+
+<div class="divider">· · ·</div>
+
+<footer>
+  <p>Corpusul II · Documentul C · <em>Războiul Invizibil — Minți, Rețele și Puterea Siliciului</em></p>
+  <p style="margin-top:.6rem">Document generat în limba română · 2026 · Toate informațiile sunt verificabile public.</p>
+  <p style="margin-top:.6rem">Surse: CISA, DNSC, NATO CCDCOE Tallinn, Mandiant, SentinelOne, CrowdStrike, Quarkslab, Recorded Future, rapoarte ale serviciilor de informații americane, europene și românești, investigații jurnalistice documentate, dosarul i-Soon (GitHub, feb. 2024), raportul DNSC 2024.</p>
+</footer>
+
+</body>
+</html>

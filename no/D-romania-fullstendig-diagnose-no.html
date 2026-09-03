@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Romania — Fullstendig diagnose. Helse, medisin, narkotika og hjerne</title>
+<style>
+  :root {
+    --bg:#0f1117; --surface:#181c27; --border:#2a2f42;
+    --green:#4a9e6a; --green-dim:#2e6645;
+    --rose:#b85c5c; --rose-dim:#7a3a3a;
+    --teal:#4a9e9e; --gold:#c9a84c; --gold-dim:#8a6e30;
+    --violet:#7c6fb0; --text:#dde1ec; --muted:#7a8199;
+    --chapter-w:740px;
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{background:var(--bg);color:var(--text);font-family:'Georgia','Times New Roman',serif;font-size:1.05rem;line-height:1.85;}
+  .hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:5rem 2rem;background:radial-gradient(ellipse at 50% 35%,#101c14 0%,#0f1117 68%);border-bottom:1px solid var(--border);}
+  .hero-series{font-size:.75rem;letter-spacing:.2em;color:var(--green-dim);text-transform:uppercase;margin-bottom:2rem;}
+  .hero h1{font-size:clamp(2rem,5vw,3.8rem);font-weight:700;color:#fff;line-height:1.15;margin-bottom:1rem;max-width:820px;}
+  .hero h1 span{color:var(--green);}
+  .hero-sub{font-size:1.05rem;color:var(--muted);max-width:600px;margin:0 auto 2.4rem;font-style:italic;}
+  .hero-verse{border-left:3px solid var(--green);padding:.9rem 1.5rem;font-style:italic;color:#e8dfc8;max-width:580px;margin:0 auto 2.6rem;text-align:left;line-height:1.75;}
+  .hero-verse cite{display:block;font-style:normal;font-size:.8rem;color:var(--green-dim);margin-top:.5rem;}
+  .toc-hint{font-size:.82rem;color:var(--muted);}
+  nav.doc-nav{position:sticky;top:0;z-index:100;background:rgba(15,17,23,.96);backdrop-filter:blur(8px);border-bottom:1px solid var(--border);padding:.55rem 0;}
+  .nav-inner{max-width:var(--chapter-w);margin:0 auto;padding:0 1.5rem;display:flex;align-items:center;gap:.4rem;flex-wrap:wrap;}
+  .nav-inner span{font-size:.7rem;color:var(--muted);margin-right:.3rem;}
+  nav.doc-nav a{font-size:.72rem;color:var(--muted);text-decoration:none;padding:.22rem .5rem;border-radius:4px;transition:color .2s,background .2s;}
+  nav.doc-nav a:hover{color:var(--green);background:rgba(74,158,106,.08);}
+  .chapter{max-width:var(--chapter-w);margin:0 auto;padding:5rem 1.5rem 3rem;}
+  .chapter+.chapter{padding-top:3.5rem;}
+  .ch-header{margin-bottom:2.4rem;padding-bottom:1.2rem;border-bottom:1px solid var(--border);}
+  .ch-num{font-size:.7rem;letter-spacing:.16em;color:var(--green-dim);text-transform:uppercase;margin-bottom:.6rem;}
+  .ch-title{font-size:clamp(1.4rem,3.5vw,2rem);font-weight:700;color:#fff;line-height:1.22;}
+  .ch-title em{color:var(--green);font-style:normal;}
+  .chapter p{margin-bottom:1.3rem;}
+  .chapter h3{font-size:1.18rem;color:var(--green);margin:2.2rem 0 .9rem;font-weight:600;}
+  .data-box{background:rgba(74,158,106,.07);border:1px solid rgba(74,158,106,.22);border-radius:8px;padding:1.3rem 1.5rem;margin:1.8rem 0;}
+  .data-box .label{font-size:.7rem;letter-spacing:.14em;color:var(--green);text-transform:uppercase;margin-bottom:.6rem;}
+  .warning-box{background:rgba(184,92,92,.07);border:1px solid rgba(184,92,92,.22);border-radius:8px;padding:1.2rem 1.5rem;margin:1.8rem 0;}
+  .warning-box .label{font-size:.7rem;letter-spacing:.12em;color:var(--rose);text-transform:uppercase;margin-bottom:.5rem;}
+  .good-box{background:rgba(74,158,106,.06);border-left:4px solid var(--green-dim);padding:1rem 1.4rem;margin:1.4rem 0;border-radius:0 6px 6px 0;}
+  .good-box .label{font-size:.7rem;letter-spacing:.12em;color:var(--green);text-transform:uppercase;margin-bottom:.5rem;}
+  .bad-box{background:rgba(184,92,92,.06);border-left:4px solid var(--rose-dim);padding:1rem 1.4rem;margin:1.4rem 0;border-radius:0 6px 6px 0;}
+  .bad-box .label{font-size:.7rem;letter-spacing:.12em;color:var(--rose);text-transform:uppercase;margin-bottom:.5rem;}
+  .case-box{background:rgba(124,111,176,.07);border:1px solid rgba(124,111,176,.22);border-radius:8px;padding:1.2rem 1.5rem;margin:1.8rem 0;}
+  .case-box .label{font-size:.7rem;letter-spacing:.12em;color:var(--violet);text-transform:uppercase;margin-bottom:.5rem;}
+  .science-box{background:rgba(74,158,158,.07);border:1px solid rgba(74,158,158,.22);border-radius:8px;padding:1.3rem 1.5rem;margin:1.8rem 0;}
+  .science-box .label{font-size:.7rem;letter-spacing:.14em;color:var(--teal);text-transform:uppercase;margin-bottom:.6rem;}
+  .no-box{background:rgba(74,158,106,.06);border:1px solid rgba(74,158,106,.18);border-radius:8px;padding:1.2rem 1.5rem;margin:1.8rem 0;}
+  .no-box .label{font-size:.7rem;letter-spacing:.14em;color:var(--green);text-transform:uppercase;margin-bottom:.6rem;}
+  .red-thread{border-left:4px solid var(--green);background:rgba(74,158,106,.07);padding:1rem 1.5rem;margin:2rem 0;border-radius:0 8px 8px 0;font-style:italic;color:#e8dfc8;}
+  .red-thread strong{color:var(--green);font-style:normal;}
+  .hidden-link{background:rgba(201,168,76,.05);border:1px dashed var(--gold-dim);border-radius:8px;padding:1rem 1.4rem;margin:2rem 0;font-size:.93rem;}
+  .hidden-link .label{font-size:.7rem;letter-spacing:.13em;color:var(--gold-dim);text-transform:uppercase;margin-bottom:.4rem;}
+  .stat-row{display:flex;gap:1.5rem;margin:1.5rem 0;flex-wrap:wrap;}
+  .stat{background:rgba(74,158,106,.06);border:1px solid rgba(74,158,106,.18);border-radius:8px;padding:.9rem 1.2rem;flex:1;min-width:140px;text-align:center;}
+  .stat .num{font-size:1.8rem;font-weight:700;color:var(--green);line-height:1.1;}
+  .stat .desc{font-size:.78rem;color:var(--muted);margin-top:.3rem;}
+  .stat.bad .num{color:var(--rose);}
+  .divider{text-align:center;color:var(--green-dim);font-size:1rem;letter-spacing:.4em;margin:3rem 0;opacity:.5;}
+  footer{border-top:1px solid var(--border);padding:2.5rem 1.5rem;text-align:center;color:var(--muted);font-size:.8rem;max-width:var(--chapter-w);margin:4rem auto 0;}
+  @media(max-width:600px){.hero h1{font-size:1.9rem;}.chapter{padding:3rem 1rem 2rem;}.stat-row{flex-direction:column;}}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <p class="hero-series">Corpus II · Dokument D · Norsk utgave</p>
+  <h1>Romania — <span>Fullstendig</span> diagnose</h1>
+  <p class="hero-sub">Helse, medisinsk system, farmasi, narkotikakrisen og nevrovitenskap — et ærlig regnskap, med verifiserbare data, om et land som overlever mot alle beregninger</p>
+  <blockquote class="hero-verse">
+    „Han leger de som er sønderknust i hjertet, og forbinder deres sår."
+    <cite>Salme 147:3</cite>
+  </blockquote>
+  <p class="toc-hint">↓ Rull ned for å lese</p>
+</header>
+
+<nav class="doc-nav">
+  <div class="nav-inner">
+    <span>Kapitler:</span>
+    <a href="#kommunisme">Kommunisttiden</a>
+    <a href="#postkommunisme">Postkommunisme</a>
+    <a href="#demografi">Demografi 2026</a>
+    <a href="#sykdommer">Sykdommer</a>
+    <a href="#helsesystem">Helsesystemet</a>
+    <a href="#saker">Nøkkelsaker</a>
+    <a href="#desinformasjon">Medisinsk desinformasjon</a>
+    <a href="#legemidler">Legemiddelindustrien</a>
+    <a href="#narkotika">Narkotikakrisen</a>
+    <a href="#hjerne">Hjerne og motgift</a>
+    <a href="#glymfatisk">Det glymfatiske systemet</a>
+    <a href="#reserve">Nevrologisk reserve</a>
+    <a href="#hap">Dokumentert håp</a>
+  </div>
+</nav>
+
+<!-- INTRO -->
+<section class="chapter" id="intro">
+  <div class="ch-header">
+    <p class="ch-num">Innledning</p>
+    <h2 class="ch-title">Romania — <em>Et land som fortjener å ses med åpne øyne</em></h2>
+  </div>
+
+  <p>Romania har en kompleks helsehistorie. Et land som ga verden oppdagerne av insulin og ribosomer, som grunnla verdens første geriatriinstitutt, som utdanner leger anerkjent på alle kontinenter — og likevel et land som daglig mister mennesker av forebyggbare sykdommer, har det minste helsebudsjettet i EU og opplever en massiv legeemigrasjon.</p>
+
+  <p>Disse to realitetene eksisterer side om side og må forstås sammen. Formålet med dette dokumentet er ikke å motvirke, men å informere. Ikke å skremme, men å klargjøre. Ikke å dramatisere, men å ansvarliggjøre. <strong>Mennesker kan velge det gode når de er godt informert.</strong></p>
+
+  <div class="no-box">
+    <p class="label">Norsk perspektiv — Romania og Norge</p>
+    <p>Romania og Norge har en sterkere forbindelse enn mange vet. Tusenvis av rumenske arbeidstakere bidrar til norsk arbeidsliv, særlig innen bygg og anlegg, helse og landbruk. Romania er NATO-alliert og deler med Norge en bekymring for russisk aggresjon — Romania ved Svartehavet og Moldovas grense, Norge ved Barentshavet og Finnmarksgrensen. Den rumenske erfaringen med kommunistisk arv, helsesvikt og desinformasjonsangrep har direkte lærdommer for enhver europeer som ønsker å forstå Russlands metoder og Europas sårbarheter.</p>
+  </div>
+</section>
+
+<!-- CAP I — KOMMUNISTTIDEN -->
+<section class="chapter" id="kommunisme">
+  <div class="ch-header">
+    <p class="ch-num">Kapittel I</p>
+    <h2 class="ch-title">Kommunisttiden — <em>Godt og ondt ansikt til ansikt</em></h2>
+  </div>
+
+  <p>I løpet av fire tiår forvandlet det kommunistiske regimet et overveiende landbruksland til en industristat. Prisen var enorm — betalt i frihet, helse, verdighet og miljø. Det gode og det onde fra denne perioden eksisterer side om side, men opphever ikke hverandre.</p>
+
+  <div class="good-box">
+    <p class="label">Hva som ble bygd</p>
+    <p><strong>Masseutdanning:</strong> analfabetismen falt fra ~25% i 1948 til under 2% i 1989.<br>
+    <strong>Nasjonalt kraftnett:</strong> vannkraftverk på Donau, Olt og Bistrița — fornybar energi før begrepet eksisterte.<br>
+    <strong>Cernavodă kjernekraftverk</strong> — dristig strategisk beslutning med kanadisk CANDU-teknologi (ikke sovjetisk). Leverer i dag 18% av Romanias elektrisitet.<br>
+    <strong>Donau–Svartehavet-kanalen:</strong> 64 km, operativ i dag, forkorter sjøruten med 400 km.<br>
+    <strong>Uavhengighet fra Moskva:</strong> avvisningen av «Valev-planen» (1964) — et ekte politisk modighetsbevis.</p>
+  </div>
+
+  <div class="bad-box">
+    <p class="label">Prisen som ble betalt</p>
+    <p><strong>Copșa Mică — Europas mest forurensede by:</strong> blynivået i barns blod oversteg grenseverdiene med tifoldig margin.<br>
+    <strong>Pitești-systemet:</strong> omskolering gjennom tortur — ett av de mest brutale sosiale ingeniøreksperimentene i moderne historie.<br>
+    <strong>Securitate og organisert angiveri:</strong> 400.000–700.000 samarbeidspartnere.<br>
+    <strong>Kriminell demografipolitikk:</strong> Dekret 770 (1966) forbød abort og prevensjon. Resultat: generasjoner av forladte barn, mødre døde av illegale aborter, overfylte barnehjem.<br>
+    <strong>Ødeleggelse av jordbruket:</strong> tvangskollektivisering forvandlet eiere til leietakere av sin egen jord.</p>
+  </div>
+</section>
+
+<!-- CAP II — POSTKOMMUNISME -->
+<section class="chapter" id="postkommunisme">
+  <div class="ch-header">
+    <p class="ch-num">Kapittel II</p>
+    <h2 class="ch-title">Postkommunisme — <em>Frihet vunnet, muligheter tapt</em></h2>
+  </div>
+
+  <div class="good-box">
+    <p class="label">Hva som ble bygd etter 1989</p>
+    <p><strong>NATO-integrasjon (2004) og EU (2007):</strong> kollektiv sikkerhet og tilgang til strukturfond — skjebneendring, ikke bare politikkendring.<br>
+    <strong>Middelklassen og gründerskap:</strong> tusenvis av selskaper bygd fra grunnen. Rumensk IT anerkjent globalt; Bitdefender, UiPath og andre tech-selskaper har rumenske røtter.<br>
+    <strong>DNA-antikorrupsjonsbyrået:</strong> straffet korrupte på alle nivåer — et enestående eksperiment i Øst-Europa.</p>
+  </div>
+
+  <div class="bad-box">
+    <p class="label">Hva som ble bortkastet</p>
+    <p><strong>Privatiseringer med korrupsjon:</strong> statlige eiendeler solgt til lav pris med gevinster konsentrert hos få.<br>
+    <strong>Systematisk hjerneflukt:</strong> etter EU-tiltredelsen i 2007 emigrerte 3,5–5 millioner rumener. Mange er leger, ingeniører, IT-spesialister.<br>
+    <strong>Uferdig infrastruktur:</strong> Romania har lavest motorveitetthet i EU.</p>
+  </div>
+</section>
+
+<!-- CAP III — DEMOGRAFI -->
+<section class="chapter" id="demografi">
+  <div class="ch-header">
+    <p class="ch-num">Kapittel III</p>
+    <h2 class="ch-title">Demografisk bilde 2026 — <em>En krise uten sidestykke</em></h2>
+  </div>
+
+  <div class="stat-row">
+    <div class="stat bad">
+      <div class="num">145.000</div>
+      <div class="desc">fødsler i 2025 — historisk minimum</div>
+    </div>
+    <div class="stat bad">
+      <div class="num">76,6</div>
+      <div class="desc">år — forventet levealder (historisk høy, men 5,1 år under EU-snitt)</div>
+    </div>
+    <div class="stat bad">
+      <div class="num">6,6‰</div>
+      <div class="desc">spedbarnsdødelighet — høyest i EU (EU-snitt: 3,2‰)</div>
+    </div>
+  </div>
+
+  <div class="data-box">
+    <p class="label">Eurostat og INS-data 2024–2025</p>
+    <p>Verst i fylker i Sør-Romania — Teleorman, Vâlcea, Brăila — med fødselstall under 6‰ og dødelighet over 17‰. Kjønnsforskjell i forventet levealder: menn lever i gjennomsnitt til 72,8 år, kvinner til 80,4 år — et gap på 7,6 år, som gjenspeiler menns høyere eksponering for risikoatferd.<br><br>
+    <strong>Norsk perspektiv:</strong> Norge opplever også fallende fødselstall (1,40 barn per kvinne i 2024, det laveste siden Andre verdenskrig), men fra et langt bedre utgangspunkt med et robust velferdssystem. Utfordringene er sammenlignbare i retning om ikke i skala.</p>
+  </div>
+</section>
+
+<!-- CAP IV — SYKDOMMER -->
+<section class="chapter" id="sykdommer">
+  <div class="ch-header">
+    <p class="ch-num">Kapittel IV</p>
+    <h2 class="ch-title">De viktigste sykdommene — <em>Dokumenterte drepere</em></h2>
+  </div>
+
+  <div class="warning-box">
+    <p class="label">Hjerte- og karsykdommer — nr. 1 i Europa i dødelighet</p>
+    <p>Romania er nr. 1 i Europa i dødelighet fra hjerte- og karsykdommer, med <strong>109 dødsfall per 100.000 innbyggere</strong>, mot europeisk gjennomsnitt på 44 per 100.000. I 2024 forårsaket hjerte- og karsykdommer 130.441 dødsfall, som utgjorde <strong>53,3% av alle rumenske dødsfall</strong>. Omtrent 2,4 millioner rumener lever med hjerte- og karsykdom. Opptil 80% av disse dødsfallene kan forebygges gjennom livsstilsendringer.</p>
+  </div>
+
+  <div class="warning-box">
+    <p class="label">Antimikrobiell resistens — høyest i EU</p>
+    <p>Romania har det høyeste antibiotikaforbruket i EU: <strong>26 doser/dag/1.000 innbyggere</strong> mot OECD-snitt på 16. Nesten 70% av de testede bakterieisolatene er resistente mot de viktigste antibiotika. Unngåelig dødelighet: <strong>47%</strong> — høyest i EU (europeisk gjennomsnitt: 33,3%). Dette betyr at nesten halvparten av dødsfallene i Romania kunne vært forebygget med adekvat medisinsk behandling.</p>
+  </div>
+</section>
+
+<!-- CAP V — HELSESYSTEMET -->
+<section class="chapter" id="helsesystem">
+  <div class="ch-header">
+    <p class="ch-num">Kapittel V</p>
+    <h2 class="ch-title">Det medisinske systemet — <em>Strukturell diagnose</em></h2>
+  </div>
+
+  <p>Det rumenske medisinske systemet fungerer. Men det fungerer dårlig — og ofte farlig. Ikke på grunn av menneskene som utgjør det, men på grunn av strukturen de er tvunget til å operere innenfor. Rumenske leger som arbeider i Tyskland, Frankrike eller Nederland er anerkjent som eliteprofesjonelle. De samme legene, i Romania, er fanget i et system med utilstrekkelig finansiering, lammende byråkrati og fravær av ansvarliggjøring.</p>
+
+  <div class="stat-row">
+    <div class="stat bad">
+      <div class="num">34/35</div>
+      <div class="desc">Euro Health Consumer Index — nest siste plass i Europa</div>
+    </div>
+    <div class="stat bad">
+      <div class="num">6%</div>
+      <div class="desc">av BNP til helse (EU-snitt: 10%)</div>
+    </div>
+    <div class="stat bad">
+      <div class="num">18.000+</div>
+      <div class="desc">leger emigrert etter 2007</div>
+    </div>
+  </div>
+
+  <div class="warning-box">
+    <p class="label">Strukturelle svakheter — systemiske, ikke individuelle</p>
+    <p><strong>1. Kronisk utilstrekkelig finansiering:</strong> Romania bruker under 6% av BNP på helse mot EU-snitt på ~10%. Pengene går hovedsakelig til behandling og sykehusinnleggelse, ikke forebygging.<br><br>
+    <strong>2. Institusjoner som ikke kommuniserer:</strong> Helseministeriet, CNAS, fylkenes DSP-er, sykehus, fastleger, ambulanser — alle opererer med separate budsjetter, inkompatible IT-systemer og egne hierarkier. Pasienten faller i hullene mellom dem.<br><br>
+    <strong>3. Fravær av reell ansvarlighet:</strong> av nesten 400 klager om medisinsk feilbehandling i 2023–2024, ble kun 15 bekreftet. Romania er nr. 1 i EU på «unngåelige dødsfall» — 47% av dødsfallene kunne vært forebygget.<br><br>
+    <strong>4. Hjerneflukt:</strong> en spesialist tjener 1.500–3.000 euro/mnd i Romania. Den samme spesialisten tjener 5.000–9.000 euro/mnd i Tyskland eller Nederland.<br><br>
+    <strong>5. Institusjonalisert korrupsjon:</strong> Hexi Pharma-skandalen (2016) — desinfeksjonsmidler med aktiv substanskonsentrasjon opptil 4.000 ganger lavere enn angitt på etiketten, levert til 340 sykehus. Saken gikk i foreldelse. Og i 2023, samme handling, et annet selskap, 46 sykehus.</p>
+  </div>
+
+  <div class="good-box">
+    <p class="label">Hva som fungerer</p>
+    <p><strong>SMURD</strong> — skapt av Raed Arafat, internasjonalt anerkjent som modell for akuttmedisin.<br>
+    <strong>Nasjonale programmer</strong> for kreft, HIV, hepatitt og dialyse dekker fullstendig behandling.<br>
+    <strong>Privat helsevesen</strong> — MedLife, Regina Maria, Medicover — tilbyr tjenester sammenlignbare med Vest-Europa.<br>
+    <strong>Rumenske leger i utlandet</strong> er høyt verdsatt overalt — bevis på at problemet er systemet, ikke menneskene.</p>
+  </div>
+
+  <div class="no-box">
+    <p class="label">Norsk perspektiv — hva Romania kan lære av Norge og vice versa</p>
+    <p>Det norske helsesystemet er ett av verdens beste, med BNP-andel på ~10,5% (2024). Men Norge er ikke immun mot strukturelle utfordringer: fastlegekrisen med mangel på 1.000+ fastleger, ventelister i psykiatri, og eldrebølgens press på pleiesektoren. Det rumenske tilfellet illustrerer hva som skjer når et system underfinansiert i tiår ikke har en buffer å trekke på. Det er en advarsel om verdi av proaktiv investering, ikke bare reaktiv behandling. Norges HELFO-system for legemiddeldekning og IPLOS-registeret for omsorgsbehov er eksempler på transparens og datadrevne avgjørelser Romania arbeider mot.</p>
+  </div>
+</section>
+
+<!-- CAP VI — SAKER -->
+<section class="chapter" id="saker">
+  <div class="ch-header">
+    <p class="ch-num">Kapittel VI</p>
+    <h2 class="ch-title">Saker som definerte krisen — <em>Utover statistikken</em></h2>
+  </div>
+
+  <div class="case-box">
+    <p class="label">Colectiv-brannen — 30. oktober 2015 — 65 døde, delvis rettferdighet</p>
+    <p>65 unge mennesker døde. 27 i brannatten. De øvrige 37 på sykehus, etter å ha blitt smittet av nosokomiale infeksjoner — på sykehus der desinfeksjonsmidlene (levert av Hexi Pharma) ikke hadde nødvendig konsentrasjon. Ulovlig utstedte driftstillatelser. Offentlig løgn: «de har alt på sykehusene». Ti år etter: ingen statsoffisial straffedømt endelig. De tre sentrene for storbrannofre lovet umiddelbart etter tragedien er ikke operative i 2026.</p>
+  </div>
+
+  <div class="case-box">
+    <p class="label">Barnet fra Bacău — 2026 — ett dødsfall, et system uten anger</p>
+    <p>En skoleelev kollapset på skolen. Tilstedeværende ringte 112 fire-fem ganger, saken ble kodet rød. Den medisinske koordinatoren sendte ambulansen med assistent, selv om en lege var tilgjengelig på stasjonen. Legen satt 15 minutter på stasjonen mens barnet kjempet. Avdelingslederen erklærte offentlig at ingen lege var tilgjengelig — en falsk påstand. Koordinatoren, spurt om han angret, svarte nei.</p>
+  </div>
+
+  <div class="case-box">
+    <p class="label">Tilgang til innovative legemidler — en stille tragedie</p>
+    <p>Av de 168 innovative legemidlene godkjent på europeisk nivå mellom 2021 og 2024, var kun 28 kompensert i Romania ved begynnelsen av 2026. Rumenske pasienter venter i gjennomsnitt <strong>over 3 år</strong> til et EU-godkjent legemiddel blir tilgjengelig gjennom det offentlige systemet. I mellomtiden dør noen av dem mens de venter på behandlinger som eksisterer og er tilgjengelige i hele Vest-Europa.</p>
+  </div>
+</section>
+
+<!-- CAP VII — DESINFORMASJON -->
+<section class="chapter" id="desinformasjon">
+  <div class="ch-header">
+    <p class="ch-num">Kapittel VII</p>
+    <h2 class="ch-title">Medisinsk desinformasjon — <em>Folkehelsens usynlige fiende</em></h2>
+  </div>
+
+  <div class="warning-box">
+    <p class="label">Meslingkrisen — konkrete tall, 2024–2025</p>
+    <p>Mellom februar 2024 og januar 2025 kom <strong>27.568 av 32.265 meslingtilfeller i EU fra Romania — det vil si 85% av det europeiske totalet</strong>. Italia på andreplass var langt bak: 1.097 tilfeller. Vaksinasjonssdekning for første dose i Romania: <strong>47,4%</strong> — mot WHOs mål på 95%. Meslinger er en helt forebyggbar sykdom. Disse dødsfallene og sykdomstilfellene burde ikke ha skjedd.</p>
+  </div>
+
+  <div class="no-box">
+    <p class="label">Norsk kontekst — vaksinasjon og tillit</p>
+    <p>Norge har høy vaksinasjonsdekning (over 95% for de fleste barnevaksiner) og høy institusjonell tillit. Men Norge er ikke immun: antall HPV-vaksine-nekter har økt, og sosiale medier sprer vaksineskepsis i norske miljøer. Det rumenske tilfellet — der over halvparten av befolkningen ikke vaksinerer barn mot meslinger — viser sluttresultatet av langvarig undergraving av institusjonell tillit kombinert med fravær av medieopplæring. Det er en advarsel, ikke bare en statistikk.</p>
+  </div>
+</section>
+
+<!-- CAP VIII — LEGEMIDDELINDUSTRIEN -->
+<section class="chapter" id="legemidler">
+  <div class="ch-header">
+    <p class="ch-num">Kapittel VIII</p>
+    <h2 class="ch-title">Legemiddelindustrien — <em>Det ærlige regnskapet</em></h2>
+  </div>
+
+  <div class="good-box">
+    <p class="label">Hva industrien har gjort riktig</p>
+    <p>Moderne vaksiner har utryddet eller kontrollert polio, kopper og meslinger, og reddet hundrevis av millioner liv. Antibiotika, insulin og cellegift har forvandlet dødelige sykdommer til håndterbare tilstander. mRNA-teknologi åpner enorme muligheter for behandling av kreft og andre sykdommer.</p>
+  </div>
+
+  <div class="bad-box">
+    <p class="label">Strukturelle problemer — de reelle dataene</p>
+    <p>Mellom 2009 og 2018 brukte de 18 største legemiddelselskaper i S&amp;P 500 <strong>516 milliarder dollar på tilbakekjøp av aksjer</strong> — mer enn de 465 milliardene brukt på forskning og utvikling i samme periode. En rapport fra den amerikanske Senaten fra 2024 viste at Johnson &amp; Johnson i 2022 brukte 17,8 milliarder dollar på aksjeutbytte og lederkompensasjon, mot 14,6 milliarder på forskning.<br><br>
+    Opioidkrisen i USA: selskaper prioriterte profitt fremfor sikkerhet. Resultat: bøter på 62 milliarder dollar — men netto inntekter på 1,9 billioner dollar for de samme selskapene mellom 1991 og 2021.</p>
+  </div>
+</section>
+
+<!-- CAP IX — NARKOTIKA -->
+<section class="chapter" id="narkotika">
+  <div class="ch-header">
+    <p class="ch-num">Kapittel IX</p>
+    <h2 class="ch-title">Den globale narkotikakrisen — <em>De reelle tallene</em></h2>
+  </div>
+
+  <div class="data-box">
+    <p class="label">USA — krisens episenter</p>
+    <p>~69% av alle overdosedødsfall i USA involverer syntetiske opioider, i hovedsak ulovlig fremstilt fentanyl. I 2024: nesten <strong>80.000 overdosedødsfall</strong>. Positiv utvikling: i 2025 ca. 70.000 — med ~14% nedgang fra året før, tredje påfølgende år med nedgang — den lengste nedgangen registrert i nyere tid.</p>
+  </div>
+
+  <div class="data-box">
+    <p class="label">Europa — en fremvoksende trussel</p>
+    <p>Påvisninger av nitazener — syntetiske opioider som kan være enda kraftigere enn fentanyl — har økt betydelig de siste fem år. Siden 2021 har Europa rapportert flere nye typer nitazener enn fentanylanaloger. Falske piller nevnes hyppig i overdosedødsfall — ofte uten brukerens viten.</p>
+  </div>
+
+  <div class="no-box">
+    <p class="label">Norsk perspektiv — heroin, fentanyl og norsk ruspolitikk</p>
+    <p>Norge er særlig eksponert for narkotikaproblematikk: vi har en av de høyeste overdosedødelighetsratene i Europa (Folkehelseinstituttet 2024). Heroin er fortsatt involvert i de fleste dødsfallene, men fentanyl vinner terreng. Den rumenske erfaringen — der heroinkjeden fra Balkan-ruten bidrar til destabilisering og overbelaster helsesystemet — speiler norsk erfaring med det samme problemet, bare fra en annen innfallsvinkel på de samme europeiske smuglernettverk. Norsk ruspolitikk er under diskusjon etter Stortingsvedtaket om avkriminalisering (2021) som ikke ble gjennomført — et politisk landskap mer komplekst enn de offisielle posisjonene tilsier.</p>
+  </div>
+</section>
+
+<!-- CAP X — HJERNE -->
+<section class="chapter" id="hjerne">
+  <div class="ch-header">
+    <p class="ch-num">Kapittel X</p>
+    <h2 class="ch-title">Hvorfor det ikke finnes en universell motgift — <em>Den nevrologiske forklaringen</em></h2>
+  </div>
+
+  <p>Narkotika har ikke egne reseptorer i hjernen. De oppfant ingenting nytt. De fant dine reseptorer og aktiverte dem med en intensitet ingen naturlig opplevelse kan matche. Heroin bruker endorfin-reseptorene. Kokain blokkerer tilbakeopptak av dopamin. Cannabis bruker endokannabinoid-reseptorene.</p>
+
+  <div class="science-box">
+    <p class="label">Hvorfor en universell motgift er umulig</p>
+    <p>Hver klasse narkotika utnytter et helt ulikt nevrologisk system:<br>
+    — <strong>Opioider</strong> virker på mu-, kappa- og delta-reseptorer — endorfinsystemet.<br>
+    — <strong>Sentralstimulerende midler</strong> blokkerer tilbakeopptak av dopamin, serotonin og noradrenalin simultant. Det finnes ingen godkjente legemidler mot stimulantiaoverdoser — blokkering av dopamin ville forårsake nevrologisk kollaps.<br>
+    — <strong>Syntetiske cannabinoider</strong> virker på CB1- og CB2-reseptorer, 100–800 ganger kraftigere enn naturlig THC.<br><br>
+    En universell motgift måtte blokkere dopamin, serotonin, noradrenalin, opioidreseptorer, NMDA og khannabinoider simultant — noe som ville tilsvare å stoppe grunnleggende hjernefunksjoner. Du ville beskyttet hjernen mot narkotika ved å stoppe hjernen.</p>
+  </div>
+
+  <div class="science-box">
+    <p class="label">Rat Park-eksperimentet — avhengighet er kontekst, ikke substans</p>
+    <p>Bruce Alexander demonstrerte noe grunnleggende: avhengighet er ikke i substansen, men i konteksten. Isolerte rotter uten stimulering og sosial kontakt konsumerte morfin kompulsivt. De i rike sosiale miljøer ble ikke avhengige — selv med fri tilgang til samme stoff. <strong>Avhengighet er i stor grad et svar på avkobling.</strong> Forebygging som fungerer bygger forbindelser — med seg selv, med andre, med et større formål — ikke informasjon om skade.</p>
+  </div>
+</section>
+
+<!-- CAP XI — GLYMFATISK -->
+<section class="chapter" id="glymfatisk">
+  <div class="ch-header">
+    <p class="ch-num">Kapittel XI</p>
+    <h2 class="ch-title">Det glymfatiske systemet — <em>Hjernens nattrensing</em></h2>
+  </div>
+
+  <p>Det glymfatiske systemet ble oppdaget så sent som i 2013, av Maiken Nedergaard ved University of Rochester. Det er relativt ny vitenskap, men konsekvensene er dype. Under dyp NREM-søvn aktiverer hjernen et rensesystem som eliminerer metabolske avfallsprodukter akkumulert gjennom dagen, inkludert beta-amyloid assosiert med Alzheimers sykdom.</p>
+
+  <div class="science-box">
+    <p class="label">Hvordan du aktiverer det glymfatiske systemet</p>
+    <p><strong>Søvn:</strong> aktiverer nattrensing — ingen erstatning.<br>
+    <strong>Lateral sovestilling</strong> maksimerer flyten av cerebrospinalvæske gjennom perivaskulære rom.<br>
+    <strong>Tilstrekkelig hydrering:</strong> systemet fungerer gjennom aktivt sirkulerende cerebrospinalvæske; selv lett dehydrering reduserer flyten betydelig.<br>
+    <strong>Aerob fysisk trening</strong> øker glymfatisk strøm også i våken tilstand.<br>
+    <strong>Romtemperatur 18–19°C</strong> fordyper NREM-søvn og forsterker glymfatisk aktivitet.<br>
+    <strong>Alkohol selv i moderate mengder</strong> før søvn ødelegger denne aktiviteten fullstendig — fragmenterer NREM og stopper hjernerensingen.</p>
+  </div>
+</section>
+
+<!-- CAP XII — RESERVE -->
+<section class="chapter" id="reserve">
+  <div class="ch-header">
+    <p class="ch-num">Kapittel XII</p>
+    <h2 class="ch-title">Nevrologisk reserve — <em>Slik bygger du en motstandsdyktig hjerne</em></h2>
+  </div>
+
+  <div class="science-box">
+    <p class="label">Hva som bygger nevrologisk reserve — solid evidens</p>
+    <p><strong>Læring av virkelig nye ting</strong> — ikke repetisjon av det kjente. Et nytt operativsystem med annerledes logikk, et nytt språk, et musikkinstrument. Dette tvinger frem nye nevronale forbindelser.<br><br>
+    <strong>Tospråklighet og flerspråklighet</strong> forsinker Alzheimers med gjennomsnittlig 4–5 år sammenlignet med enspråklige, ved samme hjernepatologi. Mekanisme: å håndtere to lingvistiske systemer simultant trener kontinuerlig den prefrontale cortex.<br><br>
+    <strong>Instrumentalmusikk</strong> aktiverer simultant motorisk, auditivt, visuelt og prefrontalt cortex — ett av de mest komplette hjernetreningsprogrammene som er kjent.<br><br>
+    <strong>Aerob fysisk trening</strong> er det eneste som øker BDNF (hjerneavledet nevrotrofisk faktor) — proteinet som bokstavelig talt bygger nye nevronale forbindelser.<br><br>
+    <strong>Søvn av god kvalitet</strong> på første plass, uten alternativ.</p>
+  </div>
+</section>
+
+<!-- CAP XIII — HÅP -->
+<section class="chapter" id="hap">
+  <div class="ch-header">
+    <p class="ch-num">Kapittel XIII</p>
+    <h2 class="ch-title">Hvorfor Romania overlever — <em>Dokumentert håp, ikke sentimentalitet</em></h2>
+  </div>
+
+  <div class="good-box">
+    <p class="label">Verifiserbare argumenter for håp</p>
+    <p><strong>Bevist historisk motstandsdyktighet:</strong> Romania overlevde 45 år med kommunisme i en av de mest brutale formene — og kom seg ut. Dette er empirisk bevis på en reell overlevelsesevne.<br><br>
+    <strong>Antikroppar mot autoritarisme:</strong> en hel generasjon rumener vokste opp i full kunnskap om hva det betyr å leve uten frihet. Denne motstanden er ikke synlig i statistikk, men den fungerer.<br><br>
+    <strong>Diaspora som ressurs:</strong> 3,5–5 millioner rumener i utlandet. Mange sender penger hjem, bygger forbindelser med Vesten og vender tilbake med ekspertise.<br><br>
+    <strong>Fremragende under motgang:</strong> rumenske leger er verdsatt i hele Vest-Europa. UiPath — rumensk enhjørning bygd i Bukarest, børsnotert i New York. Bitdefender — topp 3 globalt innen cybersikkerhet. Dette er ikke unntak. Det er et mønster.<br><br>
+    <strong>Ung generasjon:</strong> unge rumener utdannet ved europeiske og amerikanske universiteter har en annerledes profil enn tidligere generasjoner — mindre preget av kommunistisk arv, mer globalt tilkoblet, mer gründerorientert.</p>
+  </div>
+
+  <div class="hidden-link">
+    <p class="label">Norsk parallell — Norges vei fra fattigdom til velstand</p>
+    <p>Norge var et av Europas fattigste land ved inngangen til det 20. århundre. Emigrasjon til Amerika var massiv — anslagsvis 800.000 nordmenn emigrerte mellom 1825 og 1925. Oljerikdommen er relativt ny (1969-). Den norske historien viser at velstand ikke er destinasjon, men retning og vedvarende innsats gjennom institusjoner. Romanias utfordringer i dag minner om Norges for to til tre generasjoner siden — med alle de forskjellene i kontekst og midler som det innebærer. Men retningen, om ikke hastigheten, er sammenlignbar.</p>
+  </div>
+
+  <div class="red-thread">
+    <strong>Konklusjonen:</strong> En god diagnose er ikke en som avvæpner deg. Det er en som viser deg nøyaktig hva som er sykt, hva det finnes behandling for og hvilke reelle ressurser du har for helbredelse. Romania har reelle, strukturelle, dokumenterte sykdommer. Det har også reelle, dokumenterte ressurser, til tider usynlige i statistikk. Å ikke se sykdommene er naivitet. Å ikke se ressursene er urettferdighet overfor sin egen historie. Sannheten er et sted i skjæringspunktet mellom begge — ubehagelig, men fullstendig.
+  </div>
+</section>
+
+<div class="divider">· · ·</div>
+
+<footer>
+  <p>Corpus II · Dokument D · <em>Romania — Fullstendig diagnose</em></p>
+  <p style="margin-top:.6rem">Norsk utgave · 2026 · All informasjon kan verifiseres offentlig.</p>
+  <p style="margin-top:.6rem">Kilder: INS, Eurostat, Euro Health Consumer Index, OECD, WHO, GLOBSEC Healthcare Readiness Index 2024, CNAS, European Heart Network, Lancet (Nutt-skalaen), HeartMath Institute, Nedergaard M. (2013) — det glymfatiske systemet, Harvard Longitudinal Study of Adult Development, FHI årsrapport 2024, PST årsrapport 2025, NSM risikorapport 2025.</p>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>România — Diagnostic complet. Sănătate, sistem medical, droguri și creier</title>
+<style>
+  :root {
+    --bg:        #0f1117;
+    --surface:   #181c27;
+    --border:    #2a2f42;
+    --green:     #4a9e6a;
+    --green-dim: #2e6645;
+    --rose:      #b85c5c;
+    --rose-dim:  #7a3a3a;
+    --teal:      #4a9e9e;
+    --gold:      #c9a84c;
+    --gold-dim:  #8a6e30;
+    --violet:    #7c6fb0;
+    --text:      #dde1ec;
+    --muted:     #7a8199;
+    --chapter-w: 740px;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--text); font-family: 'Georgia','Times New Roman',serif; font-size: 1.05rem; line-height: 1.85; }
+
+  .hero { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 5rem 2rem; background: radial-gradient(ellipse at 50% 35%, #101c14 0%, #0f1117 68%); border-bottom: 1px solid var(--border); }
+  .hero-series { font-size: .75rem; letter-spacing: .2em; color: var(--green-dim); text-transform: uppercase; margin-bottom: 2rem; }
+  .hero h1 { font-size: clamp(2rem, 5vw, 3.8rem); font-weight: 700; color: #fff; line-height: 1.15; margin-bottom: 1rem; max-width: 820px; }
+  .hero h1 span { color: var(--green); }
+  .hero-sub { font-size: 1.05rem; color: var(--muted); max-width: 600px; margin: 0 auto 2.4rem; font-style: italic; }
+  .hero-verse { border-left: 3px solid var(--green); padding: .9rem 1.5rem; font-style: italic; color: #e8dfc8; max-width: 580px; margin: 0 auto 2.6rem; text-align: left; line-height: 1.75; }
+  .hero-verse cite { display: block; font-style: normal; font-size: .8rem; color: var(--green-dim); margin-top: .5rem; }
+  .toc-hint { font-size: .82rem; color: var(--muted); }
+
+  nav.doc-nav { position: sticky; top: 0; z-index: 100; background: rgba(15,17,23,.96); backdrop-filter: blur(8px); border-bottom: 1px solid var(--border); padding: .55rem 0; }
+  .nav-inner { max-width: var(--chapter-w); margin: 0 auto; padding: 0 1.5rem; display: flex; align-items: center; gap: .4rem; flex-wrap: wrap; }
+  .nav-inner span { font-size: .7rem; color: var(--muted); margin-right: .3rem; }
+  nav.doc-nav a { font-size: .72rem; color: var(--muted); text-decoration: none; padding: .22rem .5rem; border-radius: 4px; transition: color .2s, background .2s; }
+  nav.doc-nav a:hover { color: var(--green); background: rgba(74,158,106,.08); }
+
+  .chapter { max-width: var(--chapter-w); margin: 0 auto; padding: 5rem 1.5rem 3rem; }
+  .chapter + .chapter { padding-top: 3.5rem; }
+  .ch-header { margin-bottom: 2.4rem; padding-bottom: 1.2rem; border-bottom: 1px solid var(--border); }
+  .ch-num { font-size: .7rem; letter-spacing: .16em; color: var(--green-dim); text-transform: uppercase; margin-bottom: .6rem; }
+  .ch-title { font-size: clamp(1.4rem, 3.5vw, 2rem); font-weight: 700; color: #fff; line-height: 1.22; }
+  .ch-title em { color: var(--green); font-style: normal; }
+  .chapter p { margin-bottom: 1.3rem; }
+  .chapter h3 { font-size: 1.18rem; color: var(--green); margin: 2.2rem 0 .9rem; font-weight: 600; }
+  .chapter h4 { font-size: 1rem; color: var(--teal); margin: 1.8rem 0 .7rem; font-weight: 600; }
+
+  .data-box { background: rgba(74,158,106,.07); border: 1px solid rgba(74,158,106,.22); border-radius: 8px; padding: 1.3rem 1.5rem; margin: 1.8rem 0; }
+  .data-box .label { font-size: .7rem; letter-spacing: .14em; color: var(--green); text-transform: uppercase; margin-bottom: .6rem; }
+  .warning-box { background: rgba(184,92,92,.07); border: 1px solid rgba(184,92,92,.22); border-radius: 8px; padding: 1.2rem 1.5rem; margin: 1.8rem 0; }
+  .warning-box .label { font-size: .7rem; letter-spacing: .12em; color: var(--rose); text-transform: uppercase; margin-bottom: .5rem; }
+  .good-box { background: rgba(74,158,106,.06); border-left: 4px solid var(--green-dim); padding: 1rem 1.4rem; margin: 1.4rem 0; border-radius: 0 6px 6px 0; }
+  .good-box .label { font-size: .7rem; letter-spacing: .12em; color: var(--green); text-transform: uppercase; margin-bottom: .5rem; }
+  .bad-box { background: rgba(184,92,92,.06); border-left: 4px solid var(--rose-dim); padding: 1rem 1.4rem; margin: 1.4rem 0; border-radius: 0 6px 6px 0; }
+  .bad-box .label { font-size: .7rem; letter-spacing: .12em; color: var(--rose); text-transform: uppercase; margin-bottom: .5rem; }
+  .case-box { background: rgba(124,111,176,.07); border: 1px solid rgba(124,111,176,.22); border-radius: 8px; padding: 1.2rem 1.5rem; margin: 1.8rem 0; }
+  .case-box .label { font-size: .7rem; letter-spacing: .12em; color: var(--violet); text-transform: uppercase; margin-bottom: .5rem; }
+  .science-box { background: rgba(74,158,158,.07); border: 1px solid rgba(74,158,158,.22); border-radius: 8px; padding: 1.3rem 1.5rem; margin: 1.8rem 0; }
+  .science-box .label { font-size: .7rem; letter-spacing: .14em; color: var(--teal); text-transform: uppercase; margin-bottom: .6rem; }
+  .red-thread { border-left: 4px solid var(--green); background: rgba(74,158,106,.07); padding: 1rem 1.5rem; margin: 2rem 0; border-radius: 0 8px 8px 0; font-style: italic; color: #e8dfc8; }
+  .red-thread strong { color: var(--green); font-style: normal; }
+  .hidden-link { background: rgba(201,168,76,.05); border: 1px dashed var(--gold-dim); border-radius: 8px; padding: 1rem 1.4rem; margin: 2rem 0; font-size: .93rem; }
+  .hidden-link .label { font-size: .7rem; letter-spacing: .13em; color: var(--gold-dim); text-transform: uppercase; margin-bottom: .4rem; }
+  .stat-row { display: flex; gap: 1.5rem; margin: 1.5rem 0; flex-wrap: wrap; }
+  .stat { background: rgba(74,158,106,.06); border: 1px solid rgba(74,158,106,.18); border-radius: 8px; padding: .9rem 1.2rem; flex: 1; min-width: 140px; text-align: center; }
+  .stat .num { font-size: 1.8rem; font-weight: 700; color: var(--green); line-height: 1.1; }
+  .stat .desc { font-size: .78rem; color: var(--muted); margin-top: .3rem; }
+  .stat.bad .num { color: var(--rose); }
+  .divider { text-align: center; color: var(--green-dim); font-size: 1rem; letter-spacing: .4em; margin: 3rem 0; opacity: .5; }
+  footer { border-top: 1px solid var(--border); padding: 2.5rem 1.5rem; text-align: center; color: var(--muted); font-size: .8rem; max-width: var(--chapter-w); margin: 4rem auto 0; }
+  @media (max-width: 600px) { .hero h1 { font-size: 1.9rem; } .chapter { padding: 3rem 1rem 2rem; } .stat-row { flex-direction: column; } }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<header class="hero">
+  <p class="hero-series">Corpusul II · Documentul D</p>
+  <h1>România — <span>Diagnostic</span> complet</h1>
+  <p class="hero-sub">Sănătate, sistem medical, farmaceutică, criza drogurilor și neuroștiință — un bilanț cinstit, cu date verificabile, despre o țară care supraviețuiește împotriva tuturor calculelor</p>
+  <blockquote class="hero-verse">
+    „El vindecă pe cei cu inima zdrobită și le leagă rănile."
+    <cite>Psalmul 147:3</cite>
+  </blockquote>
+  <p class="toc-hint">↓ Derulați pentru a citi</p>
+</header>
+
+<!-- NAV -->
+<nav class="doc-nav">
+  <div class="nav-inner">
+    <span>Capitole:</span>
+    <a href="#era-comunista">Era comunistă</a>
+    <a href="#postcomunism">Postcomunism</a>
+    <a href="#demografie">Demografie 2026</a>
+    <a href="#boli">Principalele boli</a>
+    <a href="#sistem-medical">Sistemul medical</a>
+    <a href="#cazuri">Cazuri-cheie</a>
+    <a href="#dezinformare-medicala">Dezinformare medicală</a>
+    <a href="#farmaceutice">Industria farmaceutică</a>
+    <a href="#droguri">Criza drogurilor</a>
+    <a href="#creier">Creier și antidot</a>
+    <a href="#glimfatic">Sistemul glimfatic</a>
+    <a href="#rezerva">Rezerva neurologică</a>
+    <a href="#speranta">Speranță documentată</a>
+  </div>
+</nav>
+
+<!-- INTRO -->
+<section class="chapter" id="intro">
+  <div class="ch-header">
+    <p class="ch-num">Introducere</p>
+    <h2 class="ch-title">România — <em>O țară care merită privită cu ochii deschiși</em></h2>
+  </div>
+
+  <p>România are o poveste complexă în domeniul sănătății. O țară care a dat lumii descoperitori ai insulinei și ai ribozomilor, care a fondat primul institut de geriatrie din lume, care formează medici recunoscuți pe toate continentele — și totuși o țară care pierde zilnic oameni din boli prevenibile, care are cel mai mic buget de sănătate din Uniunea Europeană și care se confruntă cu un exod masiv al medicilor.</p>
+
+  <p>Aceste două realități coexistă și trebuie înțelese împreună. Scopul acestui document nu este să descurajeze, ci să echipeze. Nu să sperie, ci să clarifice. Nu să dramatizeze, ci să responsabilizeze. <strong>Oamenii pot alege binele dacă sunt bine informați.</strong></p>
+
+  <p>Documentul de față acoperă întreg spectrul: de la era comunistă și postcomunism, la tabloul demografic actual, principalele boli, sistemul medical și cazurile care au definit criza lui, dezinformarea medicală, industria farmaceutică, criza globală a drogurilor, neuroștiința explicând de ce nu există antidoturi universale, sistemul glimfatic și rezerva neurologică — și, la final, motivele concrete, documentate, pentru care România poate fi privită cu speranță realistă.</p>
+</section>
+
+<!-- CAP I — ERA COMUNISTĂ -->
+<section class="chapter" id="era-comunista">
+  <div class="ch-header">
+    <p class="ch-num">Capitolul I</p>
+    <h2 class="ch-title">Era comunistă — <em>Binele și răul față în față</em></h2>
+  </div>
+
+  <p>În patru decenii, regimul comunist a transformat radical o țară preponderent agricolă într-un stat industrial. Prețul a fost imens — plătit în libertate, sănătate, demnitate și mediu înconjurător. Binele și răul din această perioadă coexistă, dar nu se anulează reciproc.</p>
+
+  <div class="good-box">
+    <p class="label">Ce s-a construit</p>
+    <p><strong>Alfabetizarea masivă:</strong> rata analfabetismului a scăzut de la ~25% în 1948 la sub 2% în 1989. Școlarizarea obligatorie și rețeaua de școli rurale au adus educația în sate care nu o cunoscuseră niciodată.<br><br>
+    <strong>Rețeaua energetică națională:</strong> hidrocentrale pe Dunăre, Olt, Argeș și Bistrița — energie regenerabilă înainte ca termenul să existe.<br><br>
+    <strong>Centrala nucleară Cernavodă</strong> — decizie îndrăzneață și strategică, cu tehnologie CANDU canadiană (nu sovietică). Furnizează astăzi 18% din electricitatea României.<br><br>
+    <strong>Canalul Dunăre–Marea Neagră:</strong> 64 km, funcțional astăzi, scurtează ruta navală cu 400 km.<br><br>
+    <strong>Independența față de Moscova:</strong> refuzul „Planului Valev" (1964) — un act de curaj politic real, deschizând relații cu Occidentul și China.</p>
+  </div>
+
+  <div class="bad-box">
+    <p class="label">Prețul plătit</p>
+    <p><strong>Copșa Mică — cel mai poluat oraș din Europa:</strong> plumbul din sângele copiilor depășea de zeci de ori limitele admise. Proporțiile poluării erau cunoscute de autorități și ascunse.<br><br>
+    <strong>Demolarea satelor:</strong> 8.000 de sate planificate pentru demolare. Sistematizarea a distrus comunități, patrimoniu și identitate.<br><br>
+    <strong>Sistemul Pitești:</strong> reeducare prin tortură documentată. Una dintre cele mai brutale experimente de inginerie a minții umane din istoria modernă.<br><br>
+    <strong>Securitatea și delațiunea organizată de stat:</strong> 400.000–700.000 de colaboratori. O societate în care vecinul era potențial informator.<br><br>
+    <strong>Politica demografică criminală:</strong> Decretul 770 (1966) — interzicerea avortului și a contracepției. Rezultat: generații de copii abandonați, mame moarte în avorturi ilegale, orfelinate supraîncărcate.<br><br>
+    <strong>Distrugerea agriculturii:</strong> colectivizarea forțată a transformat proprietarii în chiriași ai propriului pământ.</p>
+  </div>
+</section>
+
+<!-- CAP II — POSTCOMUNISM -->
+<section class="chapter" id="postcomunism">
+  <div class="ch-header">
+    <p class="ch-num">Capitolul II</p>
+    <h2 class="ch-title">Postcomunism — <em>Libertatea câștigată, oportunitățile pierdute</em></h2>
+  </div>
+
+  <div class="good-box">
+    <p class="label">Ce s-a construit după 1989</p>
+    <p><strong>Integrarea în NATO (2004) și UE (2007):</strong> securitate colectivă și acces la fondul structural european — schimbare de destin, nu de politici.<br><br>
+    <strong>Clasa de mijloc și antreprenoriatul:</strong> mii de companii construite de la zero. IT-ul românesc — recunoscut global; Bitdefender, UiPath și alte companii tech de top au rădăcini românești.<br><br>
+    <strong>Accesul la informație și cultură liberă:</strong> generații crescute cu acces la Occident, la universități de prestigiu, la idei necontrolate.<br><br>
+    <strong>Anticorupția:</strong> DNA a condamnat corupți la toate nivelurile — un experiment fără precedent în Europa de Est.</p>
+  </div>
+
+  <div class="bad-box">
+    <p class="label">Ce s-a risipit</p>
+    <p><strong>Privatizările cu șpagă:</strong> active de stat valoroase vândute la prețuri derizorii, cu beneficii concentrate în mâinile câtorva.<br><br>
+    <strong>Brain drain-ul sistematic:</strong> după aderarea la UE în 2007, 3,5–5 milioane de români au plecat. Mulți sunt medici, ingineri, IT-iști. Capitalul uman construit în decenii a emigrat.<br><br>
+    <strong>Infrastructura nefinalizată:</strong> Romania are cea mai mică densitate de autostrăzi din UE. Investițiile publice în infrastructură rămân printre cele mai slabe din regiune.<br><br>
+    <strong>Corupția endemică:</strong> accesul la servicii publice, contractele de stat, autorizațiile — toate au prețuri informale care funcționează ca un impozit alternativ invisible.</p>
+  </div>
+
+  <div class="red-thread">
+    <strong>Firul roșu — România:</strong> Nu există societate umană fără bine și fără rău. Diferența dintre societăți nu este prezența lor, ci raportul și tendința: cresc sau scad proporțional? În România, tendința pe ultimele două decenii este, cu toate dificultățile, în direcția corectă. Lent. Dureros. Dar în direcția corectă.
+  </div>
+</section>
+
+<!-- CAP III — DEMOGRAFIE -->
+<section class="chapter" id="demografie">
+  <div class="ch-header">
+    <p class="ch-num">Capitolul III</p>
+    <h2 class="ch-title">Tabloul demografic 2026 — <em>O criză fără precedent</em></h2>
+  </div>
+
+  <p>România se confruntă în 2025–2026 cu cea mai severă criză demografică din istoria sa modernă. Natalitatea a atins minimul din ultimul secol. Mortalitatea rămâne ridicată. Emigrarea continuă.</p>
+
+  <div class="stat-row">
+    <div class="stat bad">
+      <div class="num">145.000</div>
+      <div class="desc">nașteri în 2025 — minimul din toate timpurile</div>
+    </div>
+    <div class="stat bad">
+      <div class="num">76,6</div>
+      <div class="desc">ani — speranța de viață (maxim istoric, dar cu 5,1 ani sub media UE)</div>
+    </div>
+    <div class="stat bad">
+      <div class="num">6,6‰</div>
+      <div class="desc">mortalitate infantilă — cea mai ridicată din UE (media UE: 3,2‰)</div>
+    </div>
+  </div>
+
+  <div class="data-box">
+    <p class="label">Date Eurostat și INS 2024–2025</p>
+    <p>Situația cea mai gravă: județe din sudul țării — Teleorman, Vâlcea, Brăila — cu natalități sub 6‰ și mortalități de peste 17‰. Diferența între sexe: bărbații trăiesc în medie până la 72,8 ani, femeile până la 80,4 ani — un decalaj de 7,6 ani, reflectând expunerea mai mare a bărbaților la factori de risc comportamentali.<br><br>
+    <strong>De ce scade natalitatea:</strong> emigrația masivă a tinerilor, costul ridicat al creșterii unui copil, accesul insuficient la creșe și grădinițe, lipsa unui sprijin financiar real pentru familii și dezrădăcinarea socială produsă de decenii de instabilitate economică. Soluțiile există și sunt cunoscute — concediu parental flexibil, creșe accesibile, stimulente financiare reale. Ele necesită voință politică susținută pe termen lung.</p>
+  </div>
+</section>
+
+<!-- CAP IV — BOLI -->
+<section class="chapter" id="boli">
+  <div class="ch-header">
+    <p class="ch-num">Capitolul IV</p>
+    <h2 class="ch-title">Principalele boli — <em>Ucigașii documentați</em></h2>
+  </div>
+
+  <div class="warning-box">
+    <p class="label">Bolile cardiovasculare — locul 1 în Europa la mortalitate</p>
+    <p>România ocupă locul 1 în Europa la mortalitatea cauzată de boli cardiovasculare, cu <strong>109 decese la 100.000 de locuitori</strong>, față de media europeană de 44 la 100.000. În 2024, bolile aparatului circulator au cauzat 130.441 de decese, reprezentând <strong>53,3% din totalul morților din România</strong>. Aproximativ 2,4 milioane de români trăiesc cu o boală cardiovasculară. Până la 80% dintre aceste decese pot fi prevenite prin modificări de stil de viață.<br><br>
+    <em>Sursa: European Heart Network — European Cardiovascular Disease Statistics 2022; INS — Anuarul Statistic al României 2024.</em></p>
+  </div>
+
+  <div class="warning-box">
+    <p class="label">Cancerul — a doua cauză de deces</p>
+    <p>Cancerul reprezintă 19% din totalul deceselor în România. Rata mortalității prin cancer este cu 7% mai mare decât media europeană. Principala cauză este detecția târzie. România are una din cele mai ridicate rate de cancer de col uterin din UE — prevenibilă prin vaccinare HPV și detectabilă prin testul Babeș-Papanicolau. Screeeningul este cronic subfinanțat.</p>
+  </div>
+
+  <div class="data-box">
+    <p class="label">Rezistența antimicrobiană — cea mai ridicată din UE</p>
+    <p>România are cel mai ridicat consum de antibiotice din UE: <strong>26 doze/zi/1.000 locuitori</strong> față de media OCDE de 16. Aproape 70% din izolatele bacteriene testate sunt rezistente la antibioticele principale. Mortalitate evitabilă: <strong>47%</strong> — cel mai ridicat procent din UE (media europeană: 33,3%). Aceasta înseamnă că aproape jumătate dintre decesele din România ar fi putut fi prevenite cu îngrijire medicală adecvată.</p>
+  </div>
+</section>
+
+<!-- CAP V — SISTEMUL MEDICAL -->
+<section class="chapter" id="sistem-medical">
+  <div class="ch-header">
+    <p class="ch-num">Capitolul V</p>
+    <h2 class="ch-title">Sistemul medical — <em>Diagnostic structural</em></h2>
+  </div>
+
+  <p>Sistemul medical românesc funcționează. Dar funcționează prost — și adesea, în mod periculos. Nu din cauza oamenilor care îl compun, ci din cauza structurii în care aceștia sunt obligați să activeze. Medicii români care lucrează în Germania, Franța sau Olanda sunt apreciați ca profesioniști de elită. Aceiași medici, în România, sunt prinși într-un sistem cu finanțare insuficientă, birocrație paralizantă și absența răspunderii.</p>
+
+  <div class="stat-row">
+    <div class="stat bad">
+      <div class="num">34/35</div>
+      <div class="desc">Euro Health Consumer Index — penultimul loc în Europa</div>
+    </div>
+    <div class="stat bad">
+      <div class="num">6%</div>
+      <div class="desc">din PIB alocat sănătății (media UE: 10%)</div>
+    </div>
+    <div class="stat bad">
+      <div class="num">18.000+</div>
+      <div class="desc">medici emigrați după 2007</div>
+    </div>
+  </div>
+
+  <div class="warning-box">
+    <p class="label">Deficiențe structurale — sistemice, nu individuale</p>
+    <p><strong>1. Finanțarea cronic insuficientă și irațional alocată:</strong> România alocă mai puțin de 6% din PIB pentru sănătate față de media UE de aproximativ 10%. Banii puțini merg predominant pentru tratament și spitalizare, nu pentru prevenție sau îngrijire primară.<br><br>
+    <strong>2. Instituții care nu comunică:</strong> Ministerul Sănătății, CNAS, DSP-urile județene, spitalele, medicii de familie, ambulanțele — toate funcționează cu bugete separate, sisteme IT incompatibile, ierarhii proprii și interese uneori opuse. Pacientul cade în golurile dintre ele.<br><br>
+    <strong>3. Absența răspunderii reale — malpraxisul impunit:</strong> din aproape 400 de sesizări de malpraxis în 2023–2024, doar 15 au fost confirmate — și toate contestate. România se află pe primul loc în UE la „decese evitabile" — 47% din decese ar fi putut fi prevenite.<br><br>
+    <strong>4. Brain drain sistematic:</strong> un specialist câștigă în România 1.500–3.000 euro/lună. Același specialist câștigă 5.000–9.000 euro/lună în Germania sau Olanda.<br><br>
+    <strong>5. Corupția instituționalizată:</strong> scandalul Hexi Pharma (2016) — dezinfectanți cu concentrații de 4.000 de ori mai mici decât pe etichetă, livrate la 340 de spitale. Dosarul prescris. Și în 2023, aceeași faptă, altă firmă, 46 de spitale.</p>
+  </div>
+
+  <div class="good-box">
+    <p class="label">Ce funcționează bine</p>
+    <p><strong>SMURD</strong> — creat de Raed Arafat, recunoscut internațional ca model de sistem de urgență.<br>
+    <strong>Programe naționale</strong> pentru cancer, HIV, hepatită și dializă acoperă tratamentul integral.<br>
+    <strong>Sectorul medical privat</strong> — MedLife, Regina Maria, Medicover — oferă servicii de calitate comparabilă cu vestul Europei.<br>
+    <strong>Chirurgia robotică în spitale publice</strong> — primul program lansat în 2024.<br>
+    <strong>Reformele PNRR:</strong> Codul Personal de Sănătate și dosarul electronic al pacientului funcționale din august 2026. 75% din finanțarea medicilor de familie plătită per serviciu prestat, nu per pacient înscris.</p>
+  </div>
+
+  <div class="data-box">
+    <p class="label">Medicina militară și solidaritatea cu Ucraina</p>
+    <p>Războiul din Ucraina, la granița României, a accelerat dramatic modernizarea medicinei militare românești. Ministerul Sănătății a lansat o nouă specialitate: serviciile medicale operaționale. România a pus la dispoziție toate cele 11 spitale militare pentru asistența răniților ucraineni. În cadrul NATO, România a format 197 de paramedici ucraineni în medicina tactică de intervenție în timp de război.</p>
+  </div>
+</section>
+
+<!-- CAP VI — CAZURI -->
+<section class="chapter" id="cazuri">
+  <div class="ch-header">
+    <p class="ch-num">Capitolul VI</p>
+    <h2 class="ch-title">Cazuri care au definit criza — <em>Dincolo de statistici</em></h2>
+  </div>
+
+  <div class="case-box">
+    <p class="label">Incendiul Colectiv — 30 octombrie 2015 — 65 de morți, dreptate parțială</p>
+    <p>65 de tineri au murit. 27 în noaptea incendiului. Ceilalți 37 în spitale, după ce au contractat infecții nosocomiale — în spitale cu dezinfectanți furnizați de Hexi Pharma care nu aveau concentrația necesară. Autorizații de funcționare acordate ilegal. Minciuna publică oficială: „au de toate în spitale". La 10 ani de la tragedie: niciun oficial al statului condamnat penal definitiv. Cele trei centre pentru mari arși promise imediat după tragedie nu sunt funcționale nici în 2026.</p>
+  </div>
+
+  <div class="case-box">
+    <p class="label">Hexi Pharma — 2016 — sute de mii de pacienți puși în pericol</p>
+    <p>Dezinfectanți ineficienți livrați la 340 de spitale din România, cu concentrații de substanță activă de până la 4.000 de ori mai mici decât pe etichetă. Firma fusese implicată într-un scandal similar în 2006 — fără consecințe. Procesul penal s-a încheiat prin prescripție. Victimele nu au primit dreptate. Și în 2023, o altă firmă trimisă în judecată pentru aceeași faptă — dezinfectanți diluați livrați la 46 de spitale. Sistemul nu a învățat.</p>
+  </div>
+
+  <div class="case-box">
+    <p class="label">Copilul din Bacău — 2026 — un deces, un sistem care nu regretă</p>
+    <p>Un elev s-a prăbușit la școală. Cei prezenți au sunat la 112 de 4–5 ori, cazul a fost încadrat cod roșu. Coordonatorul medical a trimis ambulanța cu asistent, deși un medic era disponibil în stație. Medicul a stat 15 minute în stație în timp ce copilul se zbătea. Directoarea unității a declarat public că nu era medic disponibil — afirmație falsă. Coordonatorul, întrebat dacă regretă, a răspuns că nu. Deficiențe identificate: triaj telefonic subiectiv și nereglementat; minciuna instituțională ca prim reflex; absența totală a culturii responsabilității.</p>
+  </div>
+
+  <div class="case-box">
+    <p class="label">Accesul la medicamente inovatoare — o tragedie tăcută</p>
+    <p>Din cele 168 de medicamente inovatoare aprobate la nivel european între 2021 și 2024, doar 28 erau compensate în România la începutul lui 2026. Pacienții români așteaptă în medie <strong>peste 3 ani</strong> până când un medicament aprobat în Europa devine disponibil prin sistemul public. În acest interval, unii dintre ei mor așteptând tratamente care există și sunt accesibile în toată Europa Occidentală.</p>
+  </div>
+</section>
+
+<!-- CAP VII — DEZINFORMARE MEDICALĂ -->
+<section class="chapter" id="dezinformare-medicala">
+  <div class="ch-header">
+    <p class="ch-num">Capitolul VII</p>
+    <h2 class="ch-title">Dezinformarea medicală — <em>Inamicul invizibil al sănătății publice</em></h2>
+  </div>
+
+  <p>Dezinformarea medicală nu este o problemă de comunicare. Este o problemă de sănătate publică cu consecințe mortale măsurabile. România este astăzi cel mai afectat stat din Uniunea Europeană de epidemii care ar fi putut fi prevenite prin vaccinare.</p>
+
+  <div class="warning-box">
+    <p class="label">Criza rujeolei — cifre concrete, 2024–2025</p>
+    <p>Între februarie 2024 și ianuarie 2025, din 32.265 de cazuri de rujeolă înregistrate în UE, <strong>27.568 proveneau din România — adică 85% din totalul european</strong>. Locul doi, Italia, era la distanță uriașă: 1.097 de cazuri. Acceptarea primei doze de vaccin în România: <strong>47,4%</strong> — față de ținta OMS de 95%. Rujeola este o boală complet prevenibilă prin vaccinare. Aceste decese și îmbolnăviri nu ar fi trebuit să se întâmple.</p>
+  </div>
+
+  <div class="data-box">
+    <p class="label">Cauzele dezinformării — un lanț complex</p>
+    <p>Social media — platforme în care conținutul fals generează mai mult engagement decât știința.<br>
+    Desființarea vaccinării în școli — a eliminat cel mai eficient mecanism de acoperire vaccinală.<br>
+    Birocrația excesivă — descurajează vaccinarea chiar și pe cei care vor să se vaccineze.<br>
+    <strong>Dezinformarea venind din interiorul sistemului medical — cel mai grav factor.</strong> Există medici care alimentează public teorii anti-vaccin, homeopați acreditați în sistemul public. Cauze: educație medicală continuă insuficientă și neobligatorie real, absența penalizărilor pentru declarații publice anti-știință.<br>
+    Lipsa transportului și accesului în rural — barieră fizică, nu doar informațională.</p>
+  </div>
+
+  <p><strong>Soluții demonstrate:</strong> reintroducerea vaccinării în școli (măsura cu cel mai mare impact imediat), prezența medicilor pe rețelele sociale cu conținut verificat și accesibil, educație pentru sănătate obligatorie în curriculum școlar, penalizări reale pentru personalul medical care promovează informații anti-știință.</p>
+</section>
+
+<!-- CAP VIII — FARMACEUTICE -->
+<section class="chapter" id="farmaceutice">
+  <div class="ch-header">
+    <p class="ch-num">Capitolul VIII</p>
+    <h2 class="ch-title">Industria farmaceutică — <em>Bilanțul cinstit</em></h2>
+  </div>
+
+  <p>Corectitudinea impune să recunoaștem realizările reale înainte de orice critică.</p>
+
+  <div class="good-box">
+    <p class="label">Ce a făcut bine industria farmaceutică</p>
+    <p>Vaccinurile moderne au eradicat sau controlat poliomielita, variola și rujeola, salvând sute de milioane de vieți. Antibioticele, insulina și chimioterapia au transformat boli fatale în boli gestionabile. Tehnologia mRNA deschide uși uriașe pentru tratamentul cancerului și al altor boli. Cercetarea farmaceutică este cu adevărat costisitoare și riscantă — rata de eșec a medicamentelor în faza de trial clinic este imensă.</p>
+  </div>
+
+  <div class="bad-box">
+    <p class="label">Problemele structurale — datele reale</p>
+    <p>Între 2009 și 2018, cele mai mari 18 companii farmaceutice din S&amp;P 500 au cheltuit <strong>516 miliarde de dolari pe răscumpărări de acțiuni</strong> — sumă care depășește cei 465 de miliarde cheltuiți pe cercetare și dezvoltare în aceeași perioadă. Cu alte cuvinte, mai mulți bani merg spre îmbogățirea acționarilor decât spre medicamente noi.<br><br>
+    Un raport al Senatului SUA din 2024 a arătat că în 2022, Johnson &amp; Johnson a cheltuit 17,8 miliarde de dolari pe răscumpărări de acțiuni, dividende și compensații executive, față de 14,6 miliarde pe cercetare.</p>
+  </div>
+
+  <div class="case-box">
+    <p class="label">Criza opioidelor — cel mai mare scandal farmaceutic modern</p>
+    <p>Companiile farmaceutice au prioritizat profiturile în fața siguranței. Procesele judiciare au dezvăluit riscuri ascunse și eșecuri de reglementare sistematice. Rezultatul: amenzi de 62 de miliarde de dolari — dar și venituri nete de 1,9 trilioane de dolari pentru aceleași companii între 1991 și 2021. Departamentul de Justiție al SUA a inculpat executivi acuzați că au exploatat criza opioidelor pentru profit, vânzând medicamente periculoase unor farmacii ilegale și instruindu-le cum să evite detectarea.</p>
+  </div>
+
+  <div class="warning-box">
+    <p class="label">Medicamente contrafăcute — o problemă globală</p>
+    <p>În 2025, OMS a emis o alertă internațională privind versiuni contrafăcute ale unui medicament de imunoterapie, identificate în Liban, Turcia și Armenia. Falsurile nu conțineau niciun ingredient activ, punând în pericol direct pacienți cu cancer care credeau că urmează un tratament real.</p>
+  </div>
+</section>
+
+<!-- CAP IX — CRIZA DROGURILOR -->
+<section class="chapter" id="droguri">
+  <div class="ch-header">
+    <p class="ch-num">Capitolul IX</p>
+    <h2 class="ch-title">Criza globală a drogurilor — <em>Cifrele reale</em></h2>
+  </div>
+
+  <div class="data-box">
+    <p class="label">Statele Unite — epicentrul crizei</p>
+    <p>~69% din toate decesele prin supradoză din SUA implică opioide sintetice, în principal fentanil fabricat ilegal. În 2024: aproape <strong>80.000 de decese prin supradoză</strong>. Există o evoluție pozitivă: în 2025, ~70.000 de americani au murit de supradoze — cu circa 14% mai puțin față de anul anterior, al treilea an consecutiv de scădere — cel mai lung declin înregistrat în ultimele decenii.</p>
+  </div>
+
+  <div class="data-box">
+    <p class="label">Europa — o amenințare emergentă</p>
+    <p>Detecțiile de nitazene — opioide sintetice care pot fi chiar mai puternice decât fentanilul — au crescut semnificativ în ultimii cinci ani. Din 2021, Europa a raportat mai multe tipuri noi de nitazene decât analogi de fentanil. Pastilele contrafăcute sunt frecvent citate în decesele prin supradoză — adesea fără știrea consumatorului.</p>
+  </div>
+
+  <div class="warning-box">
+    <p class="label">România — profilul specific</p>
+    <p>Heroina a fost prezentă în 28% din decesele prin supradoză, metadonul în 40% din cazurile cu toxicologie disponibilă — una dintre cele mai ridicate rate din Europa. Heroina injectabilă rămâne principala problemă, mai ales în București, legată de ruta balcanică a traficului, cu intrare prin Turcia. Infrastructura de tratament este cronic subfinanțată, iar consumul de cannabis și substanțe noi în rândul tinerilor este în creștere.</p>
+  </div>
+
+  <div class="hidden-link">
+    <p class="label">Legătură ascunsă — Ruta balcanică a heroinei ca vector de destabilizare</p>
+    <p>Ruta balcanică a heroinei — prin Afganistan, Iran, Turcia, Bulgaria, România, spre Europa Occidentală — nu este un accident comercial. Ea funcționează ca un vector de destabilizare economică și socială. România este atât piață de tranzit, cât și piață de consum în creștere. Criza drogurilor suprasolicită sistemul medical, alimentează criminalitatea și slăbește coeziunea socială — exact tipul de vulnerabilitate structurală pe care actori externi (inclusiv Rusia, prin instrumente proxy) o exploatează în campaniile de dezinformare. (Legat de Documentul B)</p>
+  </div>
+
+  <div class="science-box">
+    <p class="label">Cine creează substanțele noi</p>
+    <p>Majoritatea noilor substanțe psihoactive care ajung pe piața europeană sunt produse în China și India la scară industrială, beneficiind de supraveghere regulatorie limitată, costuri scăzute și distribuție globală facilitată de internet. Jocul dintre legiuitori și producători este profund asimetric: când o moleculă e interzisă, chimistul modifică un atom și creează o nouă moleculă neinterzisă. Legea urmărește știința cu ani în urmă.</p>
+  </div>
+</section>
+
+<!-- CAP X — CREIER ȘI ANTIDOT -->
+<section class="chapter" id="creier">
+  <div class="ch-header">
+    <p class="ch-num">Capitolul X</p>
+    <h2 class="ch-title">De ce nu există antidot universal — <em>Explicația neurobiologică</em></h2>
+  </div>
+
+  <p>Drogurile nu au receptori proprii în creier. Nu au inventat nimic nou. Au găsit receptorii tăi și i-au activat cu o intensitate pe care nicio experiență naturală nu o poate atinge. Heroina folosește receptorii pentru endorfine. Cocaina blochează recaptarea dopaminei. Cannabisul folosește receptorii endocanabinoizi. Ketamina blochează receptorii NMDA.</p>
+
+  <p>Dacă blochezi acești receptori ca să nu mai răspundă la droguri, blochezi funcțiile vitale ale creierului tău. Este ca și cum ai vrea să protejezi o priză de curent acoperind-o. Da, funcționează. Dar nu mai poți folosi priza.</p>
+
+  <div class="science-box">
+    <p class="label">De ce e imposibil un antidot universal</p>
+    <p>Fiecare clasă de droguri exploatează un sistem neurologic complet diferit:<br>
+    — <strong>Opioidele</strong> acționează pe receptorii mu, kappa și delta — sistemul endorfinelor.<br>
+    — <strong>Stimulantele</strong> blochează recaptarea dopaminei, serotoninei și noradrenalinei simultan. Nu există tratamente farmacologice aprobate pentru supradoze de stimulante — blocarea dopaminei ar provoca colaps neurologic.<br>
+    — <strong>Canabinoidele sintetice</strong> acționează pe receptorii CB1 și CB2, de 100 până la 800 de ori mai puternic decât THC natural.<br>
+    — <strong>Halucinogenele</strong> acționează pe receptorii serotoninergici 5-HT2A.<br>
+    — <strong>Drogurile disociative</strong> blochează receptorii NMDA ai glutamatului.<br><br>
+    Un antidot universal ar trebui să blocheze simultan dopamina, serotonina, noradrenalina, receptorii opioizi, NMDA și canabinoidele — ceea ce ar echivala cu oprirea funcțiilor cerebrale fundamentale. Ai proteja creierul de drog oprind creierul.</p>
+  </div>
+
+  <div class="science-box">
+    <p class="label">Ce există deja și de ce e insuficient</p>
+    <p><strong>Naltrexona</strong> blochează receptorii opioizi complet, dar pacientul nu mai simte nici plăcere naturală — din mâncare, muzică, relații. Rata de abandon este uriașă.<br>
+    <strong>Naloxona</strong> este singura excepție parțială reală — se leagă de receptorii opioizi fără să producă efect biologic și împiedică opioidul să se lege. Dacă administrată suficient de repede, poate inversa o supradoză de heroină sau fentanil.<br>
+    <strong>Buprenorfina</strong> ocupă parțial receptorii opioizi și reduce craving-ul fără euforie completă — cel mai bun instrument actual, dar tot imperfect.<br><br>
+    Cel mai aproape de o vaccinare împotriva drogurilor sunt <strong>anticorpii anti-drog</strong> aflați în cercetare: molecule care se leagă de drog în sânge, înainte să treacă bariera hemato-encefalică. Există studii de faza II pentru cocaină și nicotină. Nu au ajuns la piață.</p>
+  </div>
+
+  <div class="science-box">
+    <p class="label">Experimentul Rat Park — dependența e contextul, nu substanța</p>
+    <p>Bruce Alexander a demonstrat ceva fundamental: dependența nu este în substanță, ci în context. Șobolani izolați, fără stimulare și fără conexiune socială, consumau morfină compulsiv. Cei în medii sociale bogate, cu spațiu, joacă și interacțiune, nu deveneau dependenți — chiar cu acces liber la aceeași substanță. <strong>Dependența este în mare parte un răspuns la deconectare.</strong> Prevenția care funcționează construiește conexiune — cu sine, cu ceilalți, cu un scop mai larg. Nu informație despre risc, ci viață bună trăită concret, care creează o alternativă reală în circuitele neuronale. Cel mai puternic factor protectiv identificat în cercetare: un singur adult stabil, prezent și iubitor în viața unui copil produce reziliență neurologică împotriva traumei și dependenței pe care niciun medicament nu o poate genera artificial.</p>
+  </div>
+</section>
+
+<!-- CAP XI — SISTEMUL GLIMFATIC -->
+<section class="chapter" id="glimfatic">
+  <div class="ch-header">
+    <p class="ch-num">Capitolul XI</p>
+    <h2 class="ch-title">Sistemul glimfatic — <em>Curățarea nocturnă a creierului</em></h2>
+  </div>
+
+  <p>Sistemul glimfatic a fost descoperit abia în 2013, de Maiken Nedergaard la Universitatea Rochester. Este știință relativ recentă, dar implicațiile sunt profunde. În somnul profund NREM, creierul activează un sistem de curățare care elimină deșeurile metabolice acumulate în timpul zilei, inclusiv beta-amiloidul asociat cu boala Alzheimer. Este literalmente un ciclu de curățare nocturnă.</p>
+
+  <div class="science-box">
+    <p class="label">Cum activezi sistemul glimfatic</p>
+    <p><strong>Somnul:</strong> activează curățarea nocturnă — nu există substituent.<br>
+    <strong>Poziția laterală în somn</strong> maximizează fluxul de lichid cefalorahidian prin spațiile perivasculare.<br>
+    <strong>Hidratarea corespunzătoare:</strong> sistemul funcționează prin lichid cefalorahidian care circulă activ; deshidratarea chiar ușoară reduce semnificativ fluxul. Apa nu e supliment, e infrastructură.<br>
+    <strong>Exercițiul fizic aerobic</strong> crește fluxul glimfatic și în stare de veghe — pulsațiile vasculare mai puternice pompează lichidul prin spațiile perivasculare.<br>
+    <strong>Temperatura camerei de 18–19°C</strong> adâncește somnul NREM și amplifică activitatea glimfatică.<br>
+    <strong>Alcoolul chiar și în cantități moderate</strong> înainte de somn distruge complet această activitate — fragmentează NREM și oprește curățarea cerebrală. Acesta este unul dintre argumentele neurologice cele mai solide împotriva paharului de vin de seară.</p>
+  </div>
+
+  <div class="hidden-link">
+    <p class="label">Legătură ascunsă — dezinformarea și sistemul glimfatic</p>
+    <p>Cortizolul cronic ridicat — produs de expunerea continuă la știri alarmiste și conținut emoțional negativ — reduce volumul hipocampului, zona critică pentru formarea memoriei noi. Demonstrat imagistic la persoanele cu PTSD și stres cronic. Consumul prelungit de conținut care activează frica și furia nu este neutru neurologic. Este literalmente dăunător structurii creierului. Igienă informațională nu este un concept metaforic — este neurologie preventivă. (Legat de Documentul C)</p>
+  </div>
+</section>
+
+<!-- CAP XII — REZERVA NEUROLOGICĂ -->
+<section class="chapter" id="rezerva">
+  <div class="ch-header">
+    <p class="ch-num">Capitolul XII</p>
+    <h2 class="ch-title">Rezerva neurologică — <em>Cum construiești un creier rezistent</em></h2>
+  </div>
+
+  <p>Rezerva neurologică înseamnă câtă capacitate în plus are creierul față de minimul necesar pentru funcționare. Cu cât rezerva e mai mare, cu atât creierul rezistă mai bine la îmbătrânire, boli și agresiuni chimice. Se construiește activ prin alegeri repetate — nu este un dat genetic fix.</p>
+
+  <div class="science-box">
+    <p class="label">Ce construiește rezerva neurologică — evidență solidă</p>
+    <p><strong>Învățarea de lucruri cu adevărat noi</strong> — nu repetarea celor familiare. Un sistem de operare nou cu logică diferită, o limbă nouă, un instrument muzical, un domeniu complet diferit. Acestea forțează conexiuni neuronale noi. Neuroplasticitate direcționată.<br><br>
+    <strong>Bilingvismul și multilingvismul</strong> întârzie apariția Alzheimer în medie cu 4–5 ani față de monolingvi, la aceeași patologie cerebrală. Mecanismul: gestionarea a două sisteme lingvistice simultan antrenează continuu cortexul prefrontal.<br><br>
+    <strong>Muzica instrumentală</strong> activează simultan cortexul motor, auditiv, vizual și prefrontal — unul dintre cele mai complete antrenamente cerebrale cunoscute.<br><br>
+    <strong>Complexitatea socială</strong> contribuie semnificativ. Studiile pe comunități de călugărițe au arătat că persoanele cu viață socială bogată aveau rezervă cognitivă suficientă să mascheze leziuni Alzheimer avansate fără simptome clinice.<br><br>
+    <strong>Exercițiul fizic aerobic</strong> este singurul lucru care crește BDNF (factorul neurotrofic derivat din creier) — proteina care literalmente construiește noi conexiuni neuronale.<br><br>
+    <strong>Somnul de calitate</strong> în primul loc, fără alternativă — în locul doi exercițiul aerobic.</p>
+  </div>
+
+  <div class="science-box">
+    <p class="label">Molecule cu evidență solidă</p>
+    <p><strong>Magneziul L-Treonat</strong> — dezvoltat specific pentru a traversa bariera hemato-encefalică; crește densitatea sinaptică în hipocamp. Deficitul de magneziu este extrem de comun în alimentația modernă.<br>
+    <strong>DHA (omega-3)</strong> — component structural al membranelor neuronale; sursele alimentare (pește gras, sardine, macrou) sunt superioare suplimentelor ca biodisponibilitate.<br>
+    <strong>Vitamina B12 (metilcobalamină)</strong> — esențială pentru integritatea cerebrală; deficitul e corelat cu atrofie cerebrală accelerată vizibilă prin RMN.<br>
+    <strong>Creatina</strong> — știută ca supliment muscular, dar creierul consumă cantități enorme de ATP; îmbunătățiri documentate ale memoriei de lucru.<br>
+    <strong>Cafeaua în doze moderate</strong> — asociată cu risc redus de Parkinson și Alzheimer în multiple studii prospective.</p>
+  </div>
+</section>
+
+<!-- CAP XIII — SPERANȚĂ -->
+<section class="chapter" id="speranta">
+  <div class="ch-header">
+    <p class="ch-num">Capitolul XIII</p>
+    <h2 class="ch-title">De ce România supraviețuiește — <em>Speranță documentată, nu sentimentală</em></h2>
+  </div>
+
+  <p>Există tentația de a încheia un diagnostic cu pesimism. Datele prezentate în capitolele anterioare justifică îngrijorarea. Dar ele nu justifică disperarea. Există motive concrete, documentate, pentru care România poate fi privită cu speranță realistă.</p>
+
+  <div class="good-box">
+    <p class="label">Argumente verificabile pentru speranță</p>
+    <p><strong>Reziliența istorică dovedită:</strong> România a supraviețuit 45 de ani de comunism cu una dintre formele cele mai brutale — Canalul Dunăre–Marea Neagră construit cu muncă forțată, Canalul Morților, sistemul Pitești, colectivizarea. Și a ieșit. Aceasta nu este o simplă observație. Este evidență empirică a unei capacități de supraviețuire reale.<br><br>
+    <strong>Anticorpii față de autoritarism:</strong> o generație întreagă de români a crescut știind ce înseamnă să trăiești fără libertate. Acest capital de rezistență nu se vede în statistici, dar funcționează.<br><br>
+    <strong>Diaspora ca resursă:</strong> 3,5–5 milioane de români în afară. Mulți trimit bani acasă, construiesc conexiuni cu Occidentul și revin cu expertiză. Remitențele reprezintă miliarde de euro anual — un flux economic real.<br><br>
+    <strong>Excelenți în condiții de adversitate:</strong> medicii români sunt apreciați în toată Europa Occidentală. IT-iștii români construiesc produse globale. UiPath — unicorn românesc construit la București, cotat la New York. Bitdefender — top 3 global în securitate cibernetică. Aceasta nu este excepție. Este model.<br><br>
+    <strong>Fondul Structural European:</strong> România are acces la zeci de miliarde de euro prin PNRR și fonduri structurale. Absorbția a crescut semnificativ în 2024–2025. Banii există. Capacitatea de utilizare se construiește.<br><br>
+    <strong>Generația tânără:</strong> tinerii români educați la universități europene și americane au un profil diferit de generațiile anterioare — mai puțin marcați de moștenirea comunistă, mai conectați global, mai antreprenoriali.</p>
+  </div>
+
+  <div class="hidden-link">
+    <p class="label">Legătură teologică — speranța ca virtute activă, nu sentimentală</p>
+    <p>Speranța creștină nu este optimism naiv. Este virtutea care menține acțiunea în fața evidenței contrare. Romani 5:3–5 descrie un lanț: necazul produce răbdare, răbdarea produce experiență (dovezile trecute ale supraviețuirii), experiența produce speranță — și speranța nu rușinează, pentru că dragostea lui Dumnezeu este revărsată în inimile noastre. România are necazul. Are răbdarea dovedită. Are experiența supraviețuirii. Are speranța — nu ca sentiment, ci ca concluzie logică din istoria proprie. (Legat de Documentul A)</p>
+  </div>
+
+  <div class="red-thread">
+    <strong>Concluzia acestui document:</strong> Un diagnostic bun nu este cel care te dezarmează. Este cel care îți arată exact ce este bolnav, pentru ce există tratament și ce resurse reale ai pentru vindecare. România are boli reale, structurale, documentate. Are și resurse reale, dovedite, uneori invizibile în statistici. A nu vedea bolile este naivitate. A nu vedea resursele este nedreptate față de propria istorie. Adevărul este undeva la intersecția ambelor — incomod, dar complet.
+  </div>
+</section>
+
+<div class="divider">· · ·</div>
+
+<footer>
+  <p>Corpusul II · Documentul D · <em>România — Diagnostic complet</em></p>
+  <p style="margin-top:.6rem">Document generat în limba română · 2026 · Toate datele sunt verificabile public.</p>
+  <p style="margin-top:.6rem">Surse: INS, Eurostat, Euro Health Consumer Index, OCDE, OMS, GLOBSEC Healthcare Readiness Index 2024, CNAS, Colegiul Medicilor din România, European Heart Network, Lancet (scala Nutt), HeartMath Institute, Nedergaard M. (2013) — sistemul glimfatic, Harvard Longitudinal Study of Adult Development, raportul Senatului SUA (2024 — industria farmaceutică).</p>
+</footer>
+
+</body>
+</html>

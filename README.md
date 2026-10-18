@@ -31,4 +31,4 @@ https://creativecommons.org/licenses/by/4.0/
 <!-- sfarsit licenta -->
 
 ---
-*Biblia de la București, 1688 (RO) · Norsk standardoversettelse (NO) · 2025–2026*
+*Biblia de la București, 1688 (RO) · Bibelen 1930 (NO) · 2025–2026*

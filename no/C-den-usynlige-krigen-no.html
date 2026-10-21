@@ -456,27 +456,41 @@
 
   <p><span data-afirmatie="mythos-leak">I slutten av mars 2026 gjorde en konfigurasjonsfeil hos Anthropic — et amerikansk selskap for kunstig intelligens — nesten 3000 interne filer offentlig tilgjengelige, blant dem utkast til en artikkel om en ny modell; Fortune omtalte det først, og selskapet bekreftet at det testet modellen</span>. I noen dager endret det dagsordenen for hele bransjen.</p>
 
-  <p>Anthropic hadde i hemmelighet bygget et AI-system de kalte <strong>Claude Mythos</strong>. Det var ikke en vanlig assistent. Ifølge selskapet var det et system i stand til å lese programkode i en skala intet menneske kan matche, finne skjulte sprekker i den og i noen tilfeller selv, uten menneskelig hjelp etter den første instruksen, konstruere metoder for å utnytte dem. <strong>Ifølge Anthropic fant Mythos tusenvis av sårbarheter på noen uker med intern testing.</strong></p>
+  <p>Anthropic hadde i hemmelighet bygget et AI-system de kalte <strong>Claude Mythos</strong>. Det var ikke en vanlig assistent. Ifølge selskapet var det et system i stand til å lese programkode i en skala intet menneske kan matche, finne skjulte sprekker i den og i noen tilfeller selv, uten menneskelig hjelp etter den første instruksen, konstruere metoder for å utnytte dem.</p>
+
+  <p>Ethvert dataprogram, uansett hvor godt det er skrevet, inneholder feil. Når en sårbarhet ikke er kjent av noen — heller ikke av dem som skrev koden — kalles den en <strong>zero-day</strong>. Den som først oppdager en slik sårbarhet, har enorm makt. I tiår var det å finne zero-days et sjeldent håndverk. Det krevde år med erfaring og hundrevis av arbeidstimer. Et godt team kunne finne noen få i året. <strong>Ifølge Anthropic fant Mythos tusenvis på noen uker med intern testing.</strong></p>
 
   <div class="case-box">
     <p class="label">Hva Mythos fant — publiserte eksempler</p>
     <p><strong>FreeBSD</strong> (brukt blant annet av Netflix og PlayStation): en <strong>17 år gammel</strong> sårbarhet i NFS-serveren som ga full kontroll over en server uten konto eller passord; ifølge Anthropic bygde modellen utnyttelsen selv.<br><br>
     <strong>OpenBSD</strong>: en feil som var <strong>27 år</strong> gammel, funnet i omkring tusen kjøringer som til sammen kostet under 20 000 dollar.<br><br>
-    <span data-afirmatie="firefox-271"><strong>Firefox</strong>: Mozilla kunngjorde i april 2026 at de hadde rettet <strong>271 sårbarheter</strong> funnet ved hjelp av Mythos</span>.</p>
+    <span data-afirmatie="firefox-271"><strong>Firefox</strong>: Mozilla kunngjorde i april 2026 at de hadde rettet <strong>271 sårbarheter</strong> funnet ved hjelp av Mythos</span>. Sikkerhetsvarselet for den samme versjonen (Firefox 150, MFSA 2026-30) krediterer likevel uttrykkelig Claude for bare 3 av de 43 CVE-ene; internt funnede feil samler Mozilla i samleoppføringer, så tallet 271 kan ikke kontrolleres utenfra.</p>
   </div>
+
+  <p>Anthropic regnet ut at hvis selskapet slapp Mythos til allmennheten, kunne noen med onde hensikter skaffe seg tilgang før de oppdagede sårbarhetene var rettet. Tusenvis av kritiske systemer ville plutselig bli sårbare for angrep ingen visste hvordan de skulle forsvare seg mot. Men å la være å publisere betyr ikke at problemet forsvinner. Det betyr bare at man vinner tid. Og nettopp derfor kom Project Glasswing.</p>
 
   <div class="data-box">
     <p class="label">Hva Project Glasswing er</p>
     <p><span data-afirmatie="glasswing">Kunngjort 7. april 2026</span>, er Project Glasswing en koalisjon av selskaper som driver en stor del av verdens digitale infrastruktur; Anthropic ga dem kontrollert tilgang til Mythos, med én betingelse: å bruke det utelukkende for å finne og reparere sårbarheter i egne systemer.<br><br>
-    <strong>Grunnleggende partnere:</strong> Amazon Web Services, Apple, Broadcom, Cisco, CrowdStrike, Google, JPMorgan Chase, Linux Foundation, Microsoft, NVIDIA, Palo Alto Networks.<br><br>
+    <strong>Grunnleggende partnere:</strong> Amazon Web Services, Apple, Broadcom, Cisco, CrowdStrike, Google, JPMorgan Chase, Linux Foundation, Microsoft, NVIDIA, Palo Alto Networks — selskaper hvis systemer brukes daglig av milliarder av mennesker.<br><br>
     Anthropic forpliktet seg til <strong>opptil 100 millioner dollar</strong> i brukskreditter og 4 millioner dollar i donasjoner til organisasjoner som støtter sikkerheten i open source-programvare, og utvidet tilgangen til over 40 andre organisasjoner som vedlikeholder kritisk kode.<br><br>
-    <strong>Navnet</strong> kommer fra glassvingssommerfuglen, <em>Greta oto</em>, en tropisk sommerfugl med gjennomsiktige vinger. Metaforen: sårbarheter blir synlige — akkurat som vinger som ser ut til ikke å eksistere likevel lar deg fly, er feil som ser ut til ikke å eksistere der, bare usynlige. Glasswing gjør dem synlige.</p>
+    <strong>Navnet</strong> kommer fra glassvingssommerfuglen, <em>Greta oto</em>, en tropisk sommerfugl med gjennomsiktige vinger. Ifølge Anthropic har metaforen to sider: de gjennomsiktige vingene skjuler sommerfuglen for åpent øye, som sårbarheter som ligger foran alles øyne uten å bli sett; og de samme vingene beskytter den, som den åpenheten selskapet sier det står for. Glasswing vil gjøre dem synlige.</p>
+  </div>
+
+  <div class="data-box">
+    <p class="label">Hva som skjedde etterpå — april–oktober 2026</p>
+    <p><strong>Den kontrollerte tilgangen hadde en sprekk fra første dag.</strong> 21. april 2026 meldte Bloomberg at en liten gruppe uautoriserte personer hadde brukt Mythos helt fra kunngjøringsdagen, gjennom et miljø hos en tredjepartsleverandør; ifølge meldingen brukte de det til hverdagslige oppgaver, ikke til angrep. Anthropic varslet en undersøkelse.<br><br>
+    <span data-afirmatie="fable-mythos-iunie"><strong>Offentlig lansering og eksportrestriksjoner.</strong> 9. juni 2026 lanserte Anthropic Claude Fable 5, den første versjonen i Mythos-klassen som er tilgjengelig for allmennheten, med filtre som blokkerer svar på høyrisikoområder, blant dem cybersikkerhet; Mythos 5 forble forbeholdt godkjente organisasjoner. 12. juni innførte det amerikanske handelsdepartementet eksportrestriksjoner for begge modellene, og Anthropic stengte dem for alle kunder; restriksjonene ble opphevet 30. juni, og tilgangen ble gradvis gjenopprettet fra 1. juli</span>.<br><br>
+    <span data-afirmatie="glasswing-bilant"><strong>Tallene, talt utenfra.</strong> Ifølge en analyse publisert av TechTarget 29. september 2026, basert på Anthropics register og data fra VulnCheck, hadde av 26 153 rapporterte sårbarheter 2 096 (8 %) nådd dem som vedlikeholder koden, og 202 (0,8 %) var merket som rettet. Claude hadde vurdert 91,5 % av funnene som alvorlige eller kritiske; de som vedlikeholder koden, 51,3 %. Hos curl bekreftet teamet ett av fem problemer meldt av Mythos, av lav alvorlighetsgrad</span>.<br><br>
+    Vi tror at begge deler er sant på en gang: evnen er reell, og de store tallene sier mindre enn de ser ut til før de har gått gjennom hendene på dem som retter koden.</p>
   </div>
 
   <div class="hidden-link">
-    <p class="label">Teologisk sammenheng</p>
-    <p>«Ingenting er skjult som ikke skal bli åpenbart» (Lukas 8:17). Navn og oppdrag for Project Glasswing — å gjøre usynlige sårbarheter synlige — resonerer med et grunnleggende teologisk prinsipp: gjennomsiktighet som gjenopprettingsprinsipp. Mørket (den ulappede sårbarheten, den korrupte koden, den tilbakeviste løgnen) har makt nettopp gjennom usynlighet. Lyset (revisjon, gjennomsiktighet, tilbakevisning) tar makten fra det. Vi synes det er talende at et defensivt prosjekt av slik størrelse er oppkalt etter en sommerfugl med gjennomsiktige vinger.</p>
+    <p class="label">Skjult sammenheng — Glasswing og teologien</p>
+    <p>«For det er ingen ting skjult som ikke skal bli åpenbar, og ingen ting dulgt som ikke skal bli kjent og komme for dagen» (Lukas 8:17 — Bibelen 1930). Navn og oppdrag for Project Glasswing — å gjøre usynlige sårbarheter synlige — resonerer med et grunnleggende teologisk prinsipp: gjennomsiktighet som gjenopprettingsprinsipp. Mørket (den ulappede sårbarheten, den korrupte koden, den uimotsagte løgnen) har makt nettopp gjennom usynlighet. Lyset (revisjon, gjennomsiktighet, tilbakevisning) tar makten fra det. Vi synes det er talende at et defensivt prosjekt av slik størrelse er oppkalt etter en sommerfugl med gjennomsiktige vinger. (Relatert til Dokument A)</p>
   </div>
+
+  <p>Hver sårbarhet som rettes før den blir utnyttet, er et angrep som ikke skjedde. En bankkonto som ikke ble tømt. Et sykehus hvis system ikke ble låst av løsepengevirus. Et strømnett som ikke ble slått av. Datasikkerhet har lenge vært et abstrakt problem for vanlige brukere. Glasswing er en påminnelse om at dette «et sted bak kulissene» er direkte knyttet til ditt konkrete liv.</p>
 </section>
 
 <!-- CAP XI — HVA KAN DU GJØRE -->
